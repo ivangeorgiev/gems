@@ -1,3 +1,6 @@
 site_name: Gems
 nav:
     - Home: index.md
+    - Python:
+      - Test Driven Development (TDD): python/tdd/index.md
+    - Blog: blog/index.md
