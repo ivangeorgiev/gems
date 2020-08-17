@@ -13,7 +13,7 @@ You need to truncate a table using `pyodbc`.
 
 Here is an example of a function to truncate a database table, using `pyodbc` connection.
 
-You can find the full source in [GitHub](https://github.com/ivangeorgiev/gems/src/pyodbc_truncate_table).
+You can find the full source in [GitHub](https://github.com/ivangeorgiev/gems/tree/master/src).
 
 ```python
 def truncate_table(table_ref, dbc):
