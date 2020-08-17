@@ -2,6 +2,7 @@
 
 
 
+* Cleared AZ-900
 * Created this site
   *on August 15th, 2020*
 * Created article: [Assert custom objects are equal in Python unit test](../python/tdd/python-unittest-assert-custom-objects-are-equal.md)
