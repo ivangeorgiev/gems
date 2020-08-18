@@ -99,3 +99,5 @@ You can call the `execute` method on a connection cursor directly, but it is alw
 * improves the readability of the code - you create your own idioms or dictionary which make your code more expressive.
 * improves the testability of the code - imagine your code truncates the table in the middle of 200+ line code fragment. How would you test it works correctly? How would you cover both scenarios?
 * isolates your code from the external system - one of the benefits of this isolation is that you can unit test your code.
+
+You can find the `pyodbc` documentation [here](https://github.com/mkleehammer/pyodbc/wiki).
