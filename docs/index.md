@@ -2,6 +2,9 @@
 
 ## Latest Articles
 
+* [Unpacking a Python sequence into variables](python/tricks/python-trick-unpack-a-sequence-into-variables.md)
+  *on August 19th, 2020, in [Python](python/index.md) :: [Tricks](python/tricks/index.md)*
+
 * [Truncate table with pyodbc](python/misc/python-pyodbc-truncate-table.md)
   *on August 17th, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
 
