@@ -2,7 +2,10 @@
 
 
 
+* Created article: [Unpacking a Python sequence into variables](../python/tricks/python-trick-unpack-a-sequence-into-variables.md)
+  *on August 19th, 2020, in [Python](../python/index.md) :: [Tricks](../python/tricks/index.md)*
 * Cleared AZ-900
+  *on August 17th, 2020*
 * Created this site
   *on August 15th, 2020*
 * Created article: [Assert custom objects are equal in Python unit test](../python/tdd/python-unittest-assert-custom-objects-are-equal.md)

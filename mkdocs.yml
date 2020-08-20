@@ -3,5 +3,6 @@ nav:
     - Home: index.md
     - Python:
       - Test Driven Development (TDD): python/tdd/index.md
+      - Tricks: python/tricks/index.md
       - Misc Python Topics: python/misc/index.md
     - Blog: blog/index.md
