@@ -2,6 +2,9 @@
 
 ## Latest Articles
 
+* [Python Kata #1: Pipe and Filter](python/kata/python-kata-pipe-and-filter.md)
+  on August 22th, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)
+
 * [Unpacking a Python sequence into variables](python/tricks/python-trick-unpack-a-sequence-into-variables.md)
   *on August 19th, 2020, in [Python](python/index.md) :: [Tricks](python/tricks/index.md)*
 

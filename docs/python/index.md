@@ -1,6 +1,7 @@
 # Python
 
-* [Python Test Driven Development (TDD)](tdd/index.md)
-* [Python Tricks (TDD)](tricks/index.md)
+* [Test Driven Development in Python (TDD)](tdd/index.md)
+* [Python Kata](kata/index.md)
+* [Python Tricks](tricks/index.md)
 * [Misc Python topics](misc/index.md)
 
