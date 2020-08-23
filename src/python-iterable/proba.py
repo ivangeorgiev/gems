@@ -113,6 +113,13 @@ class Pipe:
     def __iter__(self):
         return iter(self._sequence)
 
+class Repeater:
+    def __init__(self, value):
+        self.value = value
+
+    def __iter__(self):
+        return self
+
 p = Pipe([1,2,3])
 
 

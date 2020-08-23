@@ -2,14 +2,20 @@
 
 ## Latest Articles
 
+* [Python Kata #3: World population](python/kata/python-kata-world-population.md)
+  *on August 23<sup>rd</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
+
+* [Python Kata #2: The Galaxy Empire salaries](python/kata/python-kata-galaxy-empire-salaries.md)
+  *on August 23<sup>rd</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
+
 * [Python Kata #1: Pipe and Filter](python/kata/python-kata-pipe-and-filter.md)
-  on August 22th, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)
+  *on August 22<sup>th</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
 
 * [Unpacking a Python sequence into variables](python/tricks/python-trick-unpack-a-sequence-into-variables.md)
-  *on August 19th, 2020, in [Python](python/index.md) :: [Tricks](python/tricks/index.md)*
+  *on August 19<sup>th</sup>, 2020, in [Python](python/index.md) :: [Tricks](python/tricks/index.md)*
 
 * [Truncate table with pyodbc](python/misc/python-pyodbc-truncate-table.md)
-  *on August 17th, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
+  *on August 17<sup>th</sup>, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
 
 * [Assert custom objects are equal in Python unit test](./python/tdd/python-unittest-assert-custom-objects-are-equal.md)
   *on August 15th, 2020, in [Python](python/index.md) :: [Test Driven Development](python/tdd/index.md)*
