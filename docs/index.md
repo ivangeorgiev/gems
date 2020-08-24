@@ -2,6 +2,9 @@
 
 ## Latest Articles
 
+* [Chain it! Or data pipelining with Python](blog/2020-08-24-chain-it-python-data-pipeline.md)
+  *on August 24<sup>th</sup>, 2020, in [Blog](blog/index.md)*
+
 * [Python Kata #3: World population](python/kata/python-kata-world-population.md)
   *on August 23<sup>rd</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
 

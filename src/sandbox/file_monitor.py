@@ -57,7 +57,7 @@ file_names_with_path = map(lambda fn: os.path.join(STAGING_PATH, fn), file_names
 lines = flat_map(get_file_lines, file_names_with_path)
 words = flat_map(lambda l: p.sub(' ', l).split(' '), lines)
 words = filter(lambda w: len(w) > 0, words)
-words = filter(lambda w: w.lower().strip(), words)
+words = map(lambda w: w.lower().strip(), words)
 
 for entry in words:
     print(entry)
