@@ -90,58 +90,13 @@ I think it is better now. I have to issues with this:
 
 Could we address these two issues? What I was looking for is:
 
-```python
-def build_word_pipeline():
-    return (
-        Pipe(repeat(get_batch))
-             .after(finish_batch)
-             .flat_map(None)
-             .map(make_path)
-             .flat_map(get_file_lines)
-             .flat_map(split_into_words)
-             .filter())
-```
+<script src="https://gist.github.com/ivangeorgiev/b5b187432359384cb9f1eb8d4df4509e.js"></script>
 
 The solution is in the decorator pattern. We start with a collection wrapped into a decorator `Pipe`. Than we apply a transformation which returns another `Pipe` decorator which bundles also the transformation. And we continue until we get all the processing we need defined.
 
 Here is the source for the `Pipe` class:
 
-```python
-import itertools
-
-class Pipe:
-    def __init__(self, seq):
-        self._seq = seq
-
-    def __iter__(self):
-        return iter(self._seq)
-    
-    def map(self, func):
-        return Pipe(map(func, self))
-
-    def flat_map(self, func=None):
-        maped_iter = self if func is None else map(func, self)
-        return Pipe(itertools.chain.from_iterable(maped_iter))
-
-    def filter(self, func=None):
-        return Pipe(filter(func, self))
-    
-    def before(self, func):
-        return Pipe(before_it(func, self))
-
-    def after(self, func):
-        return Pipe(after_it(func, self))
-    
-def before_it(func, iter1):
-    for it in iter1:
-        func()
-        yield it
-
-def after_it(func, iter1):
-    for it in iter1:
-        yield it
-        func()
-```
+<script src="https://gist.github.com/ivangeorgiev/a6b3d6dc458391a38e693af7aba7a99c.js"></script>
 
 In the implementation there is one addition - the `before`  method which calls a function before the next item from the collection is returned. The same effect could be achieved using `map`, but I added it for symmetry with `after` method and as syntactic sugar.
 
