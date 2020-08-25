@@ -2,6 +2,8 @@
 
 
 
+* [Chain it! Or data pipelining with Python](2020-08-24-chain-it-python-data-pipeline.md)
+  *on August 24<sup>th</sup>, 2020, in [Blog](../blog/index.md)*
 * Created article: [Unpacking a Python sequence into variables](../python/tricks/python-trick-unpack-a-sequence-into-variables.md)
   *on August 19th, 2020, in [Python](../python/index.md) :: [Tricks](../python/tricks/index.md)*
 * Cleared AZ-900
