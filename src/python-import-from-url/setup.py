@@ -8,10 +8,10 @@ setuptools.setup(
     version="0.0.1",
     author="Example Author",
     author_email="author@example.com",
-    description="Python import library extensions with import from url.",
+    description="Python import library extensions with implementation to import from url.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="http://github.com/ivangeorgiev/gems/src/python-import-from-url/",
+    url="https://github.com/ivangeorgiev/gems/tree/master/src/python-import-from-url/",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

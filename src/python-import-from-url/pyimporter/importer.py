@@ -90,6 +90,7 @@ class UrlImporter(PathImporter):
         fullpath = self.get_fullpath()
         source = None
         try:
+            logging.debug(f'urlopen: {fullpath}')
             with urlopen(fullpath) as file:
                 source = file.read().decode().replace("\r\n", "\n")
         except HTTPError as exc:
