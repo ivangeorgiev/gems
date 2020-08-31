@@ -1,6 +1,9 @@
 # Welcome to my Gems
 
-## Latest Articles
+## Latest Publications
+
+* [Decode and Validate Azure Active Directory Token in Python](python/misc/python-azure-ad-token-decode-validate.md)
+  *on August 31<sup>st</sup>, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
 
 * [Example on streaming response from Python Django](blog/2020-08-25-python-django-streaming-response.md)
   *on August 25<sup>th</sup>, 2020, in [Blog](blog/index.md)*
