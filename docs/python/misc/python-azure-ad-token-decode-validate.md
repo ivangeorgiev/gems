@@ -13,9 +13,11 @@ Example scenario is where you have a Web Application which is using BFF (Backend
 
 ## Solution
 
-I have created a small package to help with getting the Azure Active Directory public key and decode the token using the *pyjwt* library.
+Use *pyjwt* and `cryptography` packages.
 
-All the sources are available in [GitHub](https://github.com/ivangeorgiev/gems/tree/master/src/python-azure-ad-token-validate). Here is an example how to use it:
+I have created a small package `aadtoken` to help with getting the Azure Active Directory public key and decode the token using, using `pyjwt` and `cryptography`. Further to decode the token use the `jwt.decode` function from the `pyjwat` package.
+
+All the sources are available in [GitHub](https://github.com/ivangeorgiev/gems/tree/master/src/python-azure-ad-token-validate). Here I am providing only an example how to use the `aadtoken` helper package along with `jwt.decode`:
 
 ```python
 import os
