@@ -12,6 +12,8 @@ In Python there are many ways to implement the [Singleton Pattern](https://en.wi
 
 There is another interesting pythonic way to turn any class into a singleton. You could use a Python decorator and apply it to the class you want to be a singleton.
 
+Probably more pythonic would be to use a meta class to create a singleton. This is another story. I will tell you this story soon. 
+
 ## Python Singleton Decorator
 
 The decorator is changing the way new objects are created from the decorated class. Each time you are requesting a new object, you will get the same object again and again.
