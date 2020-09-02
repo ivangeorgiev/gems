@@ -1,4 +1,5 @@
 import logging
+import functools
 import base64
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
 from cryptography.hazmat.backends import default_backend
@@ -68,10 +69,10 @@ def get_jwks_uri(tenant_id=None):
     else:
         raise CommunicationError('jwks_uri not found in the issuer meta')
 
-
-def _fetch_jwks(tenant_id=None):
+@functools.lru_cache
+def get_jwks(tenant_id=None):
     jwks_uri= get_jwks_uri(tenant_id)
-
+    print(jwks_uri)
     try:
         response = requests.get(jwks_uri)
         response.raise_for_status()
@@ -79,11 +80,6 @@ def _fetch_jwks(tenant_id=None):
         logging.debug(response.text)
         raise CommunicationError(f'Error getting issuer jwks from {jwks_uri}', err)
     return response.json()
-
-def get_jwks(tenant_id=None):
-    if tenant_id not in _jwks_cache:
-        _jwks_cache[tenant_id] = _fetch_jwks(tenant_id)
-    return _jwks_cache[tenant_id]
 
 def get_jwk(kid, tenant_id=None):
     for jwk in get_jwks(tenant_id).get('keys'):

@@ -1,7 +1,7 @@
 import os
 import sys
 import jwt
-from aadtoken import get_public_key
+from aadtoken import get_public_key, get_jwks
 
 client_id = os.environ.get('CLIENT_ID', '<your-webapp-id-goes-here>')
 tenant_id = os.environ.get('TENANT_ID', '<your-tenant-id-goes-here>')
@@ -14,6 +14,8 @@ issuer = 'https://sts.windows.net/{tenant_id}/'.format(tenant_id=tenant_id)
 
 
 public_key = get_public_key(token)
+public_key = get_public_key(token)
+public_key = get_public_key(token)
 decoded = jwt.decode(token,
                      public_key,
                      verify=True,
@@ -21,3 +23,4 @@ decoded = jwt.decode(token,
                      audience=[client_id],
                      issuer=issuer)
 print(decoded)
+print(get_jwks.cache_info())
