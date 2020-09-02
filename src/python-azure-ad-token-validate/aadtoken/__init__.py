@@ -72,7 +72,6 @@ def get_jwks_uri(tenant_id=None):
 @functools.lru_cache
 def get_jwks(tenant_id=None):
     jwks_uri= get_jwks_uri(tenant_id)
-    print(jwks_uri)
     try:
         response = requests.get(jwks_uri)
         response.raise_for_status()
