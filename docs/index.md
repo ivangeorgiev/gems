@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Convert a Python class to Singleton using decorator](python/design-patterns/python-singleton-pattern-decorator.md) 
+  *on September 2<sup>nd</sup>, 2020, in [Python](python/index.md) :: [Design Patterns](python/design-patterns/index.md)*
+
 * [Decode and Validate Azure Active Directory Token in Python](python/misc/python-azure-ad-token-decode-validate.md)
   *on August 31<sup>st</sup>, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
 

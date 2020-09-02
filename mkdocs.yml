@@ -2,6 +2,7 @@ site_name: Gems
 nav:
     - Home: index.md
     - Python:
+      - Design Patterns: python/design-patterns/index.md
       - Test Driven Development (TDD): python/tdd/index.md
       - Kata: python/kata/index.md
       - Tricks: python/tricks/index.md
