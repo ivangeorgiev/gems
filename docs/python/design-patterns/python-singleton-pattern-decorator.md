@@ -56,7 +56,7 @@ We are creating two `Logger`  objects - `logger1` and `logger2`  we verify that 
 
 ## Try it out
 
-Here is a Jupyter notebook you can use to try the above example.
+Here is a [Jupyter notebook I created as GitHub gist](https://gist.github.com/ivangeorgiev/d4bd94bc69f14fe35324f4855a4db9f1). You can use this notebook to try the above example.
 
 <script src="https://gist.github.com/ivangeorgiev/d4bd94bc69f14fe35324f4855a4db9f1.js"></script>
 
