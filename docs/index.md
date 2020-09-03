@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Python Kata #4: Hello Mars!](python/kata/python-kata-hello-mars.md) 
+  *on September 3<sup>rd</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
+
 * [Convert a Python class to Singleton using decorator](python/design-patterns/python-singleton-pattern-decorator.md) 
   *on September 2<sup>nd</sup>, 2020, in [Python](python/index.md) :: [Design Patterns](python/design-patterns/index.md)*
 
