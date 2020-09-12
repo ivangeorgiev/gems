@@ -7,4 +7,6 @@ nav:
       - Kata: python/kata/index.md
       - Tricks: python/tricks/index.md
       - Misc Python Topics: python/misc/index.md
+    - Other:
+      - SQL Server: sqlserver/index.md
     - Blog: blog/index.md
