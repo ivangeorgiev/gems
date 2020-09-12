@@ -39,3 +39,4 @@ SELECT r.name role_principal_name,
        AND m.name = @PrincipalName;
 ```
 
+You can find this solution also as GitHub gist [list-principal-roles.sql](https://gist.github.com/ivangeorgiev/8db4631372cc8a9e8981f51860524143#file-list-principal-roles-sql).

@@ -20,3 +20,5 @@ SELECT p.cmd,
  WHERE blocked > 0
 ```
 
+You can find this solution also as GitHub gist [list-blocking-locks.sql](https://gist.github.com/ivangeorgiev/8db4631372cc8a9e8981f51860524143#file-list-blocking-locks-sql).
+
