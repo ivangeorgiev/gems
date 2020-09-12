@@ -2,6 +2,12 @@
 
 ## Latest Publications
 
+* [List roles assigned to a principal / user in SQL Server (MSSQL) Database](sqlserver/sql-server-list-find-roles-assigned-user-principalblocking-locks.md) recipe 
+  *on September 12<sup>th</sup>, 2020, in [Sql Server](sqlserver/index.md)*
+
+* [List Blocking Locks in SQL Server](sqlserver/sql-server-list-blocking-locks.md) recipe 
+  *on September 12<sup>th</sup>, 2020, in [Sql Server](sqlserver/index.md)*
+
 * [Python Kata #4: Hello Mars!](python/kata/python-kata-hello-mars.md) 
   *on September 3<sup>rd</sup>, 2020, in [Python](python/index.md) :: [Kata](python/kata/index.md)*
 

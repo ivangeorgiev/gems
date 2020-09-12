@@ -2,8 +2,8 @@
 
 
 
-* [Example on streaming response from Python Django](blog/2020-08-25-python-django-streaming-response.md)
-  *on August 25<sup>th</sup>, 2020, in [Blog](blog/index.md)*
+* [Example on streaming response from Python Django](2020-08-25-python-django-streaming-response.md)
+  *on August 25<sup>th</sup>, 2020, in [Blog](index.md)*
 * [Chain it! Or data pipelining with Python](2020-08-24-chain-it-python-data-pipeline.md)
   *on August 24<sup>th</sup>, 2020, in [Blog](../blog/index.md)*
 * Created article: [Unpacking a Python sequence into variables](../python/tricks/python-trick-unpack-a-sequence-into-variables.md)
