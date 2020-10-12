@@ -31,8 +31,9 @@ The following `AutoDocstringSchema` class parses the yaml from the view docstrin
 If the docstring fails to parse as yaml, it is ignored.
 
 ```python
-class AutoDocstringSchema(AutoSchema):
+from rest_framework.schemas.openapi import AutoSchema
 
+class AutoDocstringSchema(AutoSchema):
     @property
     def documentation(self):
         if not hasattr(self, '_documentation'):
@@ -58,6 +59,8 @@ class AutoDocstringSchema(AutoSchema):
 Here is an example of function views, documented using yaml docstring:
 
 ```python
+from rest_framework.decorators import api_view, schema
+
 @api_view(['GET'])
 @schema(AutoDocstringSchema())
 def list_todos(request):
