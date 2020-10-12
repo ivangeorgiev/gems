@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Document REST APIs based on Python Django's Rest Framework](python/misc/python-django-rest-framework-openapi-documentation.md)
+  *on October 12<sup>th</sup>, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
+
 * [List roles assigned to a principal / user in SQL Server (MSSQL) Database](sqlserver/sql-server-list-find-roles-assigned-user-principalblocking-locks.md) recipe 
   *on September 12<sup>th</sup>, 2020, in [Sql Server](sqlserver/index.md)*
 
