@@ -55,7 +55,7 @@ class AutoDocstringSchema(AutoSchema):
         return operation
 ```
 
-An example of the yaml documentation:
+Here is an example of function views, documented using yaml docstring:
 
 ```python
 @api_view(['GET'])
