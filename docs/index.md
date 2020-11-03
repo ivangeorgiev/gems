@@ -2,8 +2,9 @@
 
 ## Latest Publications
 
-* [Define Environment Variables for Databricks Cluster](databricks/databricks-configure-environment-variables.md)
-  
+* [Define Environment Variables for Databricks Cluster](databricks/databricks-configure-environment-variables.md) 
+  *on November 3<sup>rd</sup>, 2020*
+
 * [Document REST APIs based on Python Django's Rest Framework](python/misc/python-django-rest-framework-openapi-documentation.md)
   *on October 12<sup>th</sup>, 2020, in [Python](python/index.md) :: [Misc Topics](python/misc/index.md)*
 
