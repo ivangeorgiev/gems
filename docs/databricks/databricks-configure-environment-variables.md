@@ -26,8 +26,8 @@ CI/CD pipeline executes commands in non-interactive mode. To  configure Databric
 For example:
 
 ```powershell
-$Env:DATABRICKS_HOST = 'https://adb-8513315150678991.11.azuredatabricks.net'
-$Env:DATABRICKS_TOKEN = 'dapi9971d00af58c157ee32f2250cd25dfac'
+$Env:DATABRICKS_HOST = 'https://westeurope.azuredatabricks.net'
+$Env:DATABRICKS_TOKEN = 'dapi123456789050abcdefghijklmno'
 ```
 
 ## Get list of clusters
