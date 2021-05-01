@@ -4,26 +4,26 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
         
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Gems</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Create an Azure Service Principal with Azure PowerShell - Gems</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
         <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <a class="navbar-brand" href=".">Gems</a>
+                <a class="navbar-brand" href="../..">Gems</a>
                 <!-- Expander button -->
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
@@ -33,31 +33,31 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem active">
-                                <a href="." class="nav-link">Home</a>
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Python <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="python/design-patterns/" class="dropdown-item">Design Patterns</a>
+    <a href="../../python/design-patterns/" class="dropdown-item">Design Patterns</a>
 </li>
                                     
 <li>
-    <a href="python/tdd/" class="dropdown-item">Test Driven Development (TDD)</a>
+    <a href="../../python/tdd/" class="dropdown-item">Test Driven Development (TDD)</a>
 </li>
                                     
 <li>
-    <a href="python/kata/" class="dropdown-item">Kata</a>
+    <a href="../../python/kata/" class="dropdown-item">Kata</a>
 </li>
                                     
 <li>
-    <a href="python/tricks/" class="dropdown-item">Tricks</a>
+    <a href="../../python/tricks/" class="dropdown-item">Tricks</a>
 </li>
                                     
 <li>
-    <a href="python/misc/" class="dropdown-item">Misc Python Topics</a>
+    <a href="../../python/misc/" class="dropdown-item">Misc Python Topics</a>
 </li>
                                 </ul>
                             </li>
@@ -66,12 +66,12 @@
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="sqlserver/" class="dropdown-item">SQL Server</a>
+    <a href="../../sqlserver/" class="dropdown-item">SQL Server</a>
 </li>
                                 </ul>
                             </li>
                             <li class="navitem">
-                                <a href="blog/" class="nav-link">Blog</a>
+                                <a href="../../blog/" class="nav-link">Blog</a>
                             </li>
                         </ul>
 
@@ -81,16 +81,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" class="nav-link disabled">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="python/design-patterns/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -109,9 +99,21 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#welcome-to-my-gems" class="nav-link">Welcome to my Gems</a>
+            <li class="nav-item" data-level="1"><a href="#create-an-azure-service-principal-with-azure-powershell" class="nav-link">Create an Azure Service Principal with Azure PowerShell</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#latest-publications" class="nav-link">Latest Publications</a>
+            <li class="nav-item" data-level="2"><a href="#create-service-principal" class="nav-link">Create Service Principal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#reset-credentials" class="nav-link">Reset credentials</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sign-in-with-service-principal" class="nav-link">Sign-in with Service Principal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get-access-token-for-service-principal" class="nav-link">Get Access Token for Service Principal</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -122,78 +124,58 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="welcome-to-my-gems">Welcome to my Gems</h1>
-<h2 id="latest-publications">Latest Publications</h2>
-<ul>
-<li>
-<p><a href="databricks/databricks-configure-environment-variables/">Define Environment Variables for Databricks Cluster</a> 
-  <em>on November 3<sup>rd</sup>, 2020</em></p>
-</li>
-<li>
-<p><a href="python/misc/python-django-rest-framework-openapi-documentation/">Document REST APIs based on Python Django's Rest Framework</a>
-  <em>on October 12<sup>th</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/misc/">Misc Topics</a></em></p>
-</li>
-<li>
-<p><a href="python/misc/python-django-rest-framework-opeanapi-swagger-documentation/">Add OpeanAPI documentation and SwaggerUI to your Django Rest Framework project</a>
-  <em>on October 12<sup>th</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/misc/">Misc Topics</a></em></p>
-</li>
-<li>
-<p><a href="sqlserver/sql-server-list-find-roles-assigned-user-principalblocking-locks/">List roles assigned to a principal / user in SQL Server (MSSQL) Database</a> recipe 
-  <em>on September 12<sup>th</sup>, 2020, in <a href="sqlserver/">Sql Server</a></em></p>
-</li>
-<li>
-<p><a href="sqlserver/sql-server-list-blocking-locks/">List Blocking Locks in SQL Server</a> recipe 
-  <em>on September 12<sup>th</sup>, 2020, in <a href="sqlserver/">Sql Server</a></em></p>
-</li>
-<li>
-<p><a href="python/kata/python-kata-hello-mars/">Python Kata #4: Hello Mars!</a> 
-  <em>on September 3<sup>rd</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/kata/">Kata</a></em></p>
-</li>
-<li>
-<p><a href="python/design-patterns/python-singleton-pattern-decorator/">Convert a Python class to Singleton using decorator</a> 
-  <em>on September 2<sup>nd</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/design-patterns/">Design Patterns</a></em></p>
-</li>
-<li>
-<p><a href="python/misc/python-azure-ad-token-decode-validate/">Decode and Validate Azure Active Directory Token in Python</a>
-  <em>on August 31<sup>st</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/misc/">Misc Topics</a></em></p>
-</li>
-<li>
-<p><a href="blog/2020-08-25-python-django-streaming-response/">Example on streaming response from Python Django</a>
-  <em>on August 25<sup>th</sup>, 2020, in <a href="blog/">Blog</a></em></p>
-</li>
-<li>
-<p><a href="blog/2020-08-24-chain-it-python-data-pipeline/">Chain it! Or data pipelining with Python</a>
-  <em>on August 24<sup>th</sup>, 2020, in <a href="blog/">Blog</a></em></p>
-</li>
-<li>
-<p><a href="python/kata/python-kata-world-population/">Python Kata #3: World population</a>
-  <em>on August 23<sup>rd</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/kata/">Kata</a></em></p>
-</li>
-<li>
-<p><a href="python/kata/python-kata-galaxy-empire-salaries/">Python Kata #2: The Galaxy Empire salaries</a>
-  <em>on August 23<sup>rd</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/kata/">Kata</a></em></p>
-</li>
-<li>
-<p><a href="python/kata/python-kata-pipe-and-filter/">Python Kata #1: Pipe and Filter</a>
-  <em>on August 22<sup>th</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/kata/">Kata</a></em></p>
-</li>
-<li>
-<p><a href="python/tricks/python-trick-unpack-a-sequence-into-variables/">Unpacking a Python sequence into variables</a>
-  <em>on August 19<sup>th</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/tricks/">Tricks</a></em></p>
-</li>
-<li>
-<p><a href="python/misc/python-pyodbc-truncate-table/">Truncate table with pyodbc</a>
-  <em>on August 17<sup>th</sup>, 2020, in <a href="python/">Python</a> :: <a href="python/misc/">Misc Topics</a></em></p>
-</li>
-<li>
-<p><a href="python/tdd/python-unittest-assert-custom-objects-are-equal/">Assert custom objects are equal in Python unit test</a>
-  <em>on August 15th, 2020, in <a href="python/">Python</a> :: <a href="python/tdd/">Test Driven Development</a></em></p>
-</li>
-<li>
-<p><a href="python/tdd/python-unittest-database-applications/">Unit testing for Python database applications</a>
-  <em>on August 14th, 2020, in <a href="python/">Python</a> :: <a href="python/tdd/">Test Driven Development</a></em></p>
-</li>
-</ul></div>
+<h1 id="create-an-azure-service-principal-with-azure-powershell">Create an Azure Service Principal with Azure PowerShell</h1>
+<h2 id="create-service-principal">Create Service Principal</h2>
+<pre><code class="powershell">$servicePrincipalName = &quot;app-01-sp&quot;
+$servicePrincipal = New-AzADServicePrincipal -DisplayName $servicePrincipalName
+</code></pre>
+
+<p>The returned object we stored in <code>$servicePrincipal</code>  has a member <code>Secret</code> which contains a <code>SecureString</code> with a generated password. To get the secret in plain text, you can use following code:</p>
+<pre><code class="powershell">$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($servicePrincipal.Secret)
+$plainSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+</code></pre>
+
+<p>This secret is shown only once. If you loose the secret, you can <a href="#reset-credentials">reset the service principal credentials</a>.</p>
+<p>To create service principal with a custom password:</p>
+<pre><code class="powershell">Import-Module -Name Az.Resources # Imports the PSADPasswordCredential object
+$credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=(Get-Date).AddYears(1); Password=&quot;&lt;Choose a strong password&gt;&quot;}
+$sp = New-AzAdServicePrincipal -DisplayName $servicePrincipalName -PasswordCredential $credentials
+</code></pre>
+
+<h2 id="reset-credentials">Reset credentials</h2>
+<p>You can create new service principal credential using <code>New-AzADSpCredential</code>, but before that the existing credential need to be removed first:</p>
+<pre><code class="powershell">Remove-AzADSpCredential -DisplayName $servicePrincipalName -Force
+$newCredential = New-AzADSpCredential -ServicePrincipalName &quot;http://$servicePrincipalName&quot;
+</code></pre>
+
+<p>To convert the secret into plain text, you can use the following code:</p>
+<pre><code class="powershell">$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($newCredential.Secret)
+$plainSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+</code></pre>
+
+<p>You can limit the validity of the created credential:</p>
+<pre><code class="powershell">$newCredential = New-AzADSpCredential -ServicePrincipalName &quot;http://$servicePrincipalName&quot; -StartDate (Get-Date) -EndDate (Get-Date).AddYears(1)
+</code></pre>
+
+<p>The created credential will be valid for 1 year.</p>
+<h2 id="sign-in-with-service-principal">Sign-in with Service Principal</h2>
+<p>To sign in with service principal, you need the application id and the secret for the service principal.</p>
+<pre><code class="powershell">$credentials = Get-Credential
+Connect-AzAccount -ServicePrincipal -Credential $credentials -Tenant $tenantId
+</code></pre>
+
+<h2 id="get-access-token-for-service-principal">Get Access Token for Service Principal</h2>
+<p>For this you need: the tenant id, the application ID, and the secret of the service principal. You also need the tenant id.</p>
+<pre><code class="powershell">$body = @{
+    client_id = &quot;&lt;application-id&gt;&quot;
+    client_secret = &quot;&lt;application-secret&gt;&quot;
+    scope = &quot;https://westus2.api.loganalytics.io/.default&quot;
+    grant_type = &quot;client_credentials&quot;
+}
+
+(Invoke-RestMethod -Method POST -Uri &quot;https://login.microsoftonline.com/$tenantId/oauth2/v2.0/token&quot; -Body $body).access_token
+
+</code></pre></div>
             </div>
         </div>
 
@@ -202,11 +184,11 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = ".",
+            var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -274,8 +256,3 @@
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.1.2
-Build Date UTC : 2021-05-01 13:42:40.042225+00:00
--->
