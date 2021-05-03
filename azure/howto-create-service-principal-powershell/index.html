@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Series sql database - Gems</title>
+        <title>Create an Azure Service Principal with Azure PowerShell - Gems</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -99,8 +99,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#sql-database-articles" class="nav-link">SQL Database Articles</a>
+            <li class="nav-item" data-level="1"><a href="#create-an-azure-service-principal-with-azure-powershell" class="nav-link">Create an Azure Service Principal with Azure PowerShell</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#create-service-principal" class="nav-link">Create Service Principal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#reset-credentials" class="nav-link">Reset credentials</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sign-in-with-service-principal" class="nav-link">Sign-in with Service Principal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get-access-token-for-service-principal" class="nav-link">Get Access Token for Service Principal</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -108,10 +124,58 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="sql-database-articles">SQL Database Articles</h2>
-<ul>
-<li><a href="../howto-connect-and-query-sql-database-with-token-using-python-and-pyodbc/">HowTo: Connect and Query SQL Database from Python using pyodbc and access token</a></li>
-</ul></div>
+<h1 id="create-an-azure-service-principal-with-azure-powershell">Create an Azure Service Principal with Azure PowerShell</h1>
+<h2 id="create-service-principal">Create Service Principal</h2>
+<pre><code class="powershell">$servicePrincipalName = &quot;app-01-sp&quot;
+$servicePrincipal = New-AzADServicePrincipal -DisplayName $servicePrincipalName
+</code></pre>
+
+<p>The returned object we stored in <code>$servicePrincipal</code>  has a member <code>Secret</code> which contains a <code>SecureString</code> with a generated password. To get the secret in plain text, you can use following code:</p>
+<pre><code class="powershell">$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($servicePrincipal.Secret)
+$plainSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+</code></pre>
+
+<p>This secret is shown only once. If you loose the secret, you can <a href="#reset-credentials">reset the service principal credentials</a>.</p>
+<p>To create service principal with a custom password:</p>
+<pre><code class="powershell">Import-Module -Name Az.Resources # Imports the PSADPasswordCredential object
+$credentials = New-Object Microsoft.Azure.Commands.ActiveDirectory.PSADPasswordCredential -Property @{StartDate=Get-Date; EndDate=(Get-Date).AddYears(1); Password=&quot;&lt;Choose a strong password&gt;&quot;}
+$sp = New-AzAdServicePrincipal -DisplayName $servicePrincipalName -PasswordCredential $credentials
+</code></pre>
+
+<h2 id="reset-credentials">Reset credentials</h2>
+<p>You can create new service principal credential using <code>New-AzADSpCredential</code>, but before that the existing credential need to be removed first:</p>
+<pre><code class="powershell">Remove-AzADSpCredential -DisplayName $servicePrincipalName -Force
+$newCredential = New-AzADSpCredential -ServicePrincipalName &quot;http://$servicePrincipalName&quot;
+</code></pre>
+
+<p>To convert the secret into plain text, you can use the following code:</p>
+<pre><code class="powershell">$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($newCredential.Secret)
+$plainSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+</code></pre>
+
+<p>You can limit the validity of the created credential:</p>
+<pre><code class="powershell">$newCredential = New-AzADSpCredential -ServicePrincipalName &quot;http://$servicePrincipalName&quot; -StartDate (Get-Date) -EndDate (Get-Date).AddYears(1)
+</code></pre>
+
+<p>The created credential will be valid for 1 year.</p>
+<h2 id="sign-in-with-service-principal">Sign-in with Service Principal</h2>
+<p>To sign in with service principal, you need the application id and the secret for the service principal.</p>
+<pre><code class="powershell">$credentials = Get-Credential
+Connect-AzAccount -ServicePrincipal -Credential $credentials -Tenant $tenantId
+</code></pre>
+
+<h2 id="get-access-token-for-service-principal">Get Access Token for Service Principal</h2>
+<p>For this you need: the tenant id, the application ID, and the secret of the service principal. You also need the tenant id.</p>
+<pre><code class="powershell">$body = @{
+    client_id = &quot;&lt;application-id&gt;&quot;
+    client_secret = &quot;&lt;application-secret&gt;&quot;
+    scope = &quot;https://westus2.api.loganalytics.io/.default&quot;
+    grant_type = &quot;client_credentials&quot;
+}
+
+(Invoke-RestMethod -Method POST -Uri &quot;https://login.microsoftonline.com/$tenantId/oauth2/v2.0/token&quot; -Body $body).access_token
+
+</code></pre></div>
             </div>
         </div>
 

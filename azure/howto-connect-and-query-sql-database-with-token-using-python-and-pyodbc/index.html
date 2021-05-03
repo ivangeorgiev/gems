@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Series sql database - Gems</title>
+        <title>Query SQL Database from Python using pyodbc and access token - Gems</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -99,7 +99,22 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#sql-database-articles" class="nav-link">SQL Database Articles</a>
+            <li class="nav-item" data-level="1"><a href="#query-sql-database-from-python-using-pyodbc-and-access-token" class="nav-link">Query SQL Database from Python using pyodbc and access token</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#make-it-work" class="nav-link">Make it work</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#reuse-it" class="nav-link">Reuse it</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#full-code" class="nav-link">Full Code</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -108,10 +123,105 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="sql-database-articles">SQL Database Articles</h2>
-<ul>
-<li><a href="../howto-connect-and-query-sql-database-with-token-using-python-and-pyodbc/">HowTo: Connect and Query SQL Database from Python using pyodbc and access token</a></li>
-</ul></div>
+<h1 id="query-sql-database-from-python-using-pyodbc-and-access-token">Query SQL Database from Python using pyodbc and access token</h1>
+<p>pyodbc is an open source Python module that makes accessing ODBC databases simple. It implements the Python's <a href="https://www.python.org/dev/peps/pep-0249">DB API 2.0</a> specification</p>
+<p>If you want to learn more about pyodbc, check the <a href="https://pypi.org/project/pyodbc/">pypi page</a> or the <a href="https://github.com/mkleehammer/pyodbc/wiki">pyodbc wiki</a>.</p>
+<p>Connecting to a database using username and password is very convenient and easy. There are situations where we have a restriction to use token from Active Directory or Azure Active Directory.</p>
+<p>Here is a Python function which you can be used to connect to a SQL Database using access token. I have created and tested it with personal users and service principals in Azure, using Azure Active Directory.</p>
+<h1 id="make-it-work">Make it work</h1>
+<p>How to use Azure Active Directory with the ODBC driver is explained in <a href="https://docs.microsoft.com/en-us/sql/connect/odbc/using-azure-active-directory?view=sql-server-ver15">this article</a>. Based on it, I was able to connect to SQL Database using access token and pyodbc.</p>
+<p>To configure the database connection I used environment variables:</p>
+<pre><code class="python">import osdb_azure_server = os.environ['DB_SERVER']
+db_server = f'{db_azure_server}.database.windows.net'
+db_database = os.environ['DB_DATABASE']
+db_token = os.environ['DB_TOKEN']
+</code></pre>
+
+<p>Using the token and a few lines of code, I managed to connect and query the Azure SQL Database:</p>
+<pre><code class="python">import struct
+import pyodbcSQL_COPT_SS_ACCESS_TOKEN = 1256
+exptoken = b'';
+for i in bytes(db_token, &quot;UTF-8&quot;):
+    exptoken += bytes({i});
+    exptoken += bytes(1);
+tokenstruct = struct.pack(&quot;=i&quot;, len(exptoken)) + exptoken;conn = pyodbc.connect(connection_string, attrs_before = { SQL_COPT_SS_ACCESS_TOKEN:tokenstruct })
+with conn.cursor() as cursor:
+    cursor.execute(&quot;SELECT getdate()&quot;)
+    row = cursor.fetchone()
+    print(row[0])
+</code></pre>
+
+<p>The output from above example :</p>
+<pre><code>2021-04-23 08:45:50.153000
+</code></pre>
+
+<h1 id="reuse-it">Reuse it</h1>
+<p>To make above code more reusable I wrapped it into a function. The function is adding the <code>attrs_before</code> keyword attribute to be used in a <code>pyodbc.connect</code> call. This approach follows the best software design practices and provides high flexibility and maintainability of the client code.</p>
+<pre><code class="python">import structdef add_pyodbc_args_for_access_token(token:str, kwargs:dict=None):
+   kwargs = kwargs or {}
+    if (token):
+        SQL_COPT_SS_ACCESS_TOKEN = 1256
+        exptoken = b'';
+        for i in bytes(token, &quot;UTF-8&quot;):
+            exptoken += bytes({i});
+            exptoken += bytes(1);
+        tokenstruct = struct.pack(&quot;=i&quot;, len(exptoken)) + exptoken;
+        kwargs['attrs_before'] = { SQL_COPT_SS_ACCESS_TOKEN:tokenstruct }
+    return kwargs
+</code></pre>
+
+<h1 id="full-code">Full Code</h1>
+<p>Here is the function code with docstring documentation, which includes function, arguments and return result description along with example how to use it.</p>
+<pre><code class="python">import struct
+def add_pyodbc_args_for_access_token(token:str, kwargs:dict=None):
+    &quot;&quot;&quot;
+    Add pyodbc.connect arguments for SQL Server connection with token.
+
+    Based on https://docs.microsoft.com/en-us/sql/connect/odbc/using-azure-active-directory?view=sql-server-ver15
+
+    Parameters
+    ----------
+    token : str
+        Access token.
+    kwargs: dict
+        Optional kwargs. If not provided, a new dictionary will be created.
+
+    Returns
+    -------
+    dict
+        Dictionary of pyodbc.connect keyword arguments.
+Example:
+    --------
+
+    ```python
+    import os
+    import pyodbc
+
+    # Configuration
+    db_azure_server = os.environ['DB_SERVER']
+    db_server = f'{db_azure_server}.database.windows.net'
+    db_database = os.environ['DB_DATABASE']
+    db_token = os.environ['DB_TOKEN']
+
+    connect_kwargs = add_pyodbc_args_for_access_token(db_token)
+    with pyodbc.connect(connection_string, **connect_kwargs) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute(&quot;SELECT getdate()&quot;)
+            row = cursor.fetchone()
+            print(row[0])    
+    ```
+    &quot;&quot;&quot;
+    kwargs = kwargs or {}
+    if (token):
+        SQL_COPT_SS_ACCESS_TOKEN = 1256
+        exptoken = b'';
+        for i in bytes(token, &quot;UTF-8&quot;):
+            exptoken += bytes({i});
+            exptoken += bytes(1);
+        tokenstruct = struct.pack(&quot;=i&quot;, len(exptoken)) + exptoken;
+        kwargs['attrs_before'] = { SQL_COPT_SS_ACCESS_TOKEN:tokenstruct}
+    return kwargs
+</code></pre></div>
             </div>
         </div>
 
