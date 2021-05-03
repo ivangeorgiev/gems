@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Series log analytics workspace - Gems</title>
+        <title>Notes.azure synapse - Gems</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -99,7 +99,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#log-analytics-workspace-series" class="nav-link">Log Analytics Workspace Series</a>
+            <li class="nav-item" data-level="2"><a href="#adventure-works-sample-database" class="nav-link">Adventure Works Sample Database</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -108,12 +108,21 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="log-analytics-workspace-series">Log Analytics Workspace Series</h2>
+<h2 id="adventure-works-sample-database">Adventure Works Sample Database</h2>
+<p>You need:</p>
 <ul>
-<li>How to query Log Analytics Workspace from Azure PowerShell, using Service Principal. <a href="../howto-query-log-analytics-workspace-from-azure-powershell-using-service-principal/">Read more...</a></li>
-<li>Learn <a href="../howto-create-log-analytics-workspace-azure-portal/">how to create Log Analytics Workspace using Azure Portal</a></li>
-<li>You can collect Azure Event log by <a href="../howto-send-azure-activity-log-to-log-analytics-workspace/">sending Azure Event Log to Log Analytics Workspace</a></li>
-</ul></div>
+<li><a href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms">SQL Server Management Studio</a></li>
+<li>Azure Synapse Analytics</li>
+<li>Workspace name: adfcookbook-synapse</li>
+</ul>
+<p>Download the <a href="https://docs.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver15&amp;tabs=ssms">backup files</a>.</p>
+<p><img alt="" src="../media/notes.azure-synapse/download-adventure-works-backup.png" /></p>
+<h3 id="connect-to-synapse-workspace">Connect to Synapse Workspace</h3>
+<p>See also: https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/connect-overview</p>
+<p>First you need to find the Dedicated SQL endpoint.</p>
+<p><img alt="" src="../media/notes.azure-synapse/find-dedicated-sql-endpoint.png" /></p>
+<p>Connect SQL Server Management Studio (SSMS) using Azure Active Directory MFA authentication or SQL Server Authentication</p>
+<p><img alt="" src="../media/notes.azure-synapse/connect-sql-server-management-studio-ssms.png" /></p></div>
             </div>
         </div>
 

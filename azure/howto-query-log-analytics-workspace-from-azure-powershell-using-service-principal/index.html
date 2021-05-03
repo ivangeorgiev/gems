@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Series log analytics workspace - Gems</title>
+        <title>Query Log Analytics Workspace from Azure PowerShell with Service Principle - Gems</title>
         <link href="../../css/bootstrap.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -99,8 +99,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#log-analytics-workspace-series" class="nav-link">Log Analytics Workspace Series</a>
+            <li class="nav-item" data-level="1"><a href="#query-log-analytics-workspace-from-azure-powershell-with-service-principle" class="nav-link">Query Log Analytics Workspace from Azure PowerShell with Service Principle</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#what-you-need" class="nav-link">What you need?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#define-configuration" class="nav-link">Define Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#connect-service-principle-account" class="nav-link">Connect Service Principle Account</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#query-log-analytics-workspace" class="nav-link">Query Log Analytics Workspace</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -108,12 +124,75 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="log-analytics-workspace-series">Log Analytics Workspace Series</h2>
+<h1 id="query-log-analytics-workspace-from-azure-powershell-with-service-principle">Query Log Analytics Workspace from Azure PowerShell with Service Principle</h1>
+<div class="toc">
 <ul>
-<li>How to query Log Analytics Workspace from Azure PowerShell, using Service Principal. <a href="../howto-query-log-analytics-workspace-from-azure-powershell-using-service-principal/">Read more...</a></li>
-<li>Learn <a href="../howto-create-log-analytics-workspace-azure-portal/">how to create Log Analytics Workspace using Azure Portal</a></li>
-<li>You can collect Azure Event log by <a href="../howto-send-azure-activity-log-to-log-analytics-workspace/">sending Azure Event Log to Log Analytics Workspace</a></li>
-</ul></div>
+<li><a href="#query-log-analytics-workspace-from-azure-powershell-with-service-principle">Query Log Analytics Workspace from Azure PowerShell with Service Principle</a><ul>
+<li><a href="#what-you-need">What you need?</a></li>
+<li><a href="#define-configuration">Define Configuration</a></li>
+<li><a href="#connect-service-principle-account">Connect Service Principle Account</a></li>
+<li><a href="#query-log-analytics-workspace">Query Log Analytics Workspace</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="what-you-need">What you need?</h2>
+<ul>
+<li>Log Analytics Workspace</li>
+<li>Application Registration (Service Principal)</li>
+<li>Granted at least Reader role to Log Analytics Workspace</li>
+<li>You need to know:</li>
+<li>Tenant ID</li>
+<li>For the Application Registration (Service Principal):<ul>
+<li>Application ID</li>
+<li>Application Secret</li>
+</ul>
+</li>
+<li>For the Log Analytics Workspace<ul>
+<li>Workspace Name</li>
+<li>Resource Group Name</li>
+</ul>
+</li>
+</ul>
+<h2 id="define-configuration">Define Configuration</h2>
+<p>I like defining my configuration as constants:</p>
+<pre><code class="powershell">New-Variable -Name applicationId -Value &quot;&lt;application-id&gt;&quot; -Option Constant
+New-Variable -Name applicationSecret -Value &quot;&lt;application-secret&gt;&quot; -Option Constant
+New-Variable -Name tenantId -Value &quot;&lt;tenant-id&gt;&quot; -Option Constant
+New-Variable -Name WorkspaceName -Value &quot;&lt;workspace-name&gt;&quot; -Option Constant
+New-Variable -Name WorkspaceResourceGroupName -Value &quot;&lt;resource-group-name&gt;&quot; -Option Constant
+</code></pre>
+
+<h2 id="connect-service-principle-account">Connect Service Principle Account</h2>
+<p>First you need to sign-in the service principal using client credential: application id and application secret.</p>
+<pre><code class="powershell">$password = (ConvertTo-SecureString -String $applicationSecret -AsPlainText -Force)
+$credential = New-Object System.Management.Automation.PSCredential($applicationId, $password)
+
+Connect-AzAccount -Credential $credential -TenantId $tenantId -ServicePrincipal
+</code></pre>
+
+<h2 id="query-log-analytics-workspace">Query Log Analytics Workspace</h2>
+<pre><code class="powershell">$Workspace = Get-AzOperationalInsightsWorkspace -ResourceGroupName $WorkspaceResourceGroupName -Name $WorkspaceName
+
+$kqlQuery = 'ADFPipelineRun | order by TimeGenerated desc'
+
+$QueryResults = Invoke-AzOperationalInsightsQuery -Workspace $Workspace -Query $kqlQuery
+</code></pre>
+
+<p>Inspect the results:</p>
+<pre><code class="powershell">$QueryResults.Results | Select-Object -Property PipelineName, Status
+</code></pre>
+
+<p>Produces similar output:</p>
+<pre><code>PipelineName              Status    
+------------              ------    
+pl_orchestration_recipe_1 Succeeded 
+pl_orchestration_recipe_1 Succeeded 
+pl_orchestration_recipe_1 Succeeded 
+pl_orchestration_recipe_1 InProgress
+pl_orchestration_recipe_1 Queued    
+...
+</code></pre></div>
             </div>
         </div>
 
