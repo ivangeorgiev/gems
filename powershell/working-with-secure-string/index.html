@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Working with `SecureString` in PowerShell - Gems</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Gems</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Python <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../python/design-patterns/" class="dropdown-item">Design Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../python/tdd/" class="dropdown-item">Test Driven Development (TDD)</a>
+</li>
+                                    
+<li>
+    <a href="../../python/kata/" class="dropdown-item">Kata</a>
+</li>
+                                    
+<li>
+    <a href="../../python/tricks/" class="dropdown-item">Tricks</a>
+</li>
+                                    
+<li>
+    <a href="../../python/misc/" class="dropdown-item">Misc Python Topics</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Other <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../sqlserver/" class="dropdown-item">SQL Server</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../blog/" class="nav-link">Blog</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#working-with-securestring-in-powershell" class="nav-link">Working with SecureString in PowerShell</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#create-securestring" class="nav-link">Create SecureString</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get-encrypted-string-from-securestring" class="nav-link">Get Encrypted String From SecureString</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get-plaintext-string-from-securestring" class="nav-link">Get Plaintext String from SecureString</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#generate-random-encryption-key" class="nav-link">Generate Random Encryption Key</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#create-credential-object" class="nav-link">Create Credential Object</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="working-with-securestring-in-powershell">Working with <code>SecureString</code> in PowerShell</h1>
+<div class="toc">
+<ul>
+<li><a href="#working-with-securestring-in-powershell">Working with SecureString in PowerShell</a><ul>
+<li><a href="#create-securestring">Create SecureString</a><ul>
+<li><a href="#from-plain-text-string">From Plain Text String</a></li>
+<li><a href="#from-host-input">From Host Input</a></li>
+</ul>
+</li>
+<li><a href="#get-encrypted-string-from-securestring">Get Encrypted String From SecureString</a></li>
+<li><a href="#get-plaintext-string-from-securestring">Get Plaintext String from SecureString</a></li>
+<li><a href="#generate-random-encryption-key">Generate Random Encryption Key</a></li>
+<li><a href="#create-credential-object">Create Credential Object</a><ul>
+<li><a href="#using-get-credential-cmdlet">Using Get-Credential cmdlet</a></li>
+<li><a href="#using-pscredential-constructor">Using PSCredential Constructor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="create-securestring">Create <code>SecureString</code></h2>
+<h3 id="from-plain-text-string">From Plain Text String</h3>
+<p>To create a <code>SecureString</code> from plain text string, use <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring"><code>ConvertTo-SecureString</code></a></p>
+<pre><code class="powershell">$SecureString = ConvertTo-SecureString -String &quot;&lt;strong-password&gt;&quot; -AsPlainText -Force
+</code></pre>
+
+<p>The actual string is not accessible:</p>
+<pre><code class="powershell">PS&gt; $SecureStringPassword
+System.Security.SecureString
+</code></pre>
+
+<h3 id="from-host-input">From Host Input</h3>
+<p>To create secure string from user input, use the <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/read-host">Read-Host</a> cmdlet.</p>
+<pre><code class="powershell">$SecureStringPassword = Read-Host -AsSecureString -Prompt &quot;Give me a password&quot;
+</code></pre>
+
+<p>The result is a <code>SecureString</code></p>
+<pre><code class="powershell">PS&gt; $SecureStringPassword
+System.Security.SecureString
+</code></pre>
+
+<h2 id="get-encrypted-string-from-securestring">Get Encrypted String From SecureString</h2>
+<p>To encrypt <code>SecureString</code>, use the <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertfrom-securestring">ConvertFrom-SecureString</a> cmdlet, passing an encryption key:</p>
+<pre><code class="powershell">$SecureString = ConvertTo-SecureString -String &quot;&lt;strong-password&gt;&quot; -AsPlainText -Force
+$key = 1..16
+
+$EncryptedString = ConvertFrom-SecureString -SecureString $SecureString -Key $key
+</code></pre>
+
+<p>The result from above might look like the following:</p>
+<pre><code class="powershell">PS&gt; $EncryptedString
+76492d1116743f04...gA2ADgA
+</code></pre>
+
+<h2 id="get-plaintext-string-from-securestring">Get Plaintext String from SecureString</h2>
+<pre><code class="powershell">$SecureString = ConvertTo-SecureString -String &quot;&lt;strong-password&gt;&quot; -AsPlainText -Force
+
+$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureString)
+$InsecureString = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+</code></pre>
+
+<pre><code class="powershell">PS&gt; $InsecureString
+&lt;strong-password&gt;
+</code></pre>
+
+<h2 id="generate-random-encryption-key">Generate Random Encryption Key</h2>
+<pre><code class="powershell">$Key = New-Object Byte[] 16   # You can use 16, 24, or 32 for AES
+Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($Key)
+</code></pre>
+
+<p>If you inspect the value of the <code>$key</code> variable, you will find something like:</p>
+<pre><code class="powershell">PS&gt; $key -join ','
+89,74,74,16,145,92,107,80,9,7,170,63,121,210,85,225
+</code></pre>
+
+<p>Each time you generate a key, the content of the key will be different.</p>
+<h2 id="create-credential-object">Create Credential Object</h2>
+<p>There are many ways to create a credential object. We are exploring following:</p>
+<ul>
+<li>Using <code>Get-Credential</code> cmdlet</li>
+<li>Using <code>PSCredential</code> constructor </li>
+</ul>
+<h3 id="using-get-credential-cmdlet">Using <code>Get-Credential</code> cmdlet</h3>
+<p>The <code>Get-Credential</code> cmdlet is requesting the user to enter username and password. Upon completion, it returns a <code>PSCredential</code> object.</p>
+<pre><code class="powershell">$Credential = Get-Credential
+</code></pre>
+
+<h3 id="using-pscredential-constructor">Using <code>PSCredential</code> Constructor</h3>
+<p>To create username/password credential object, you can call the <code>PSCredential</code> constructor.</p>
+<pre><code class="powershell">$Credential = New-Object System.Management.Automation.PSCredential($username, $password)
+
+</code></pre>
+
+<ul>
+<li><code>$username</code> is a plaintext username</li>
+<li><code>$password</code> is a <code>SecureString</code>  password</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
