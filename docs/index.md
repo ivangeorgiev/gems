@@ -2,6 +2,18 @@
 
 ## Latest Publications
 
+* [Working with PowerShell SecureString](powershell/working-with-secure-string.md)
+  *on May 4<sup>th</sup>, 2021*
+
+* [How to query Log Analytics Workspace from Azure PowerShell, using Service Principal](azure/howto-query-log-analytics-workspace-from-azure-powershell-using-service-principal.md)
+  *on May 4<sup>th</sup>, 2021*
+
+* [HowTo: Create Azure Service Principal with PowerShell](azure/howto-create-service-principal-powershell.md)
+  *on May 3<sup>rd</sup>, 2021*
+
+* [HowTo: Connect and Query SQL Database from Python using pyodbc and access token](azure/howto-connect-and-query-sql-database-with-token-using-python-and-pyodbc.md)
+  *on May 3<sup>rd</sup>, 2021*
+
 * [Define Environment Variables for Databricks Cluster](databricks/databricks-configure-environment-variables.md) 
   *on November 3<sup>rd</sup>, 2020*
 
