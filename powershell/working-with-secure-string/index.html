@@ -150,6 +150,12 @@
 </ul>
 </div>
 <h2 id="create-securestring">Create <code>SecureString</code></h2>
+<p>There are many ways for creating <code>SecureString</code> . Most often we need to create <code>SecureString</code> :</p>
+<ul>
+<li>From plain-text String</li>
+<li>From host input</li>
+</ul>
+<p>There are other ways or sources of <code>SecureString</code> , e.g. Key Vault secrets, but we will limit to basic cases only as they give enough coverage and understanding to handle also other situations.</p>
 <h3 id="from-plain-text-string">From Plain Text String</h3>
 <p>To create a <code>SecureString</code> from plain text string, use <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring"><code>ConvertTo-SecureString</code></a></p>
 <pre><code class="powershell">$SecureString = ConvertTo-SecureString -String &quot;&lt;strong-password&gt;&quot; -AsPlainText -Force
