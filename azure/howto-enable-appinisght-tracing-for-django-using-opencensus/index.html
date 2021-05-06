@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>How to enable  tracing in Django with OpenCensus - Gems</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Gems</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Python <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../python/design-patterns/" class="dropdown-item">Design Patterns</a>
+</li>
+                                    
+<li>
+    <a href="../../python/tdd/" class="dropdown-item">Test Driven Development (TDD)</a>
+</li>
+                                    
+<li>
+    <a href="../../python/kata/" class="dropdown-item">Kata</a>
+</li>
+                                    
+<li>
+    <a href="../../python/tricks/" class="dropdown-item">Tricks</a>
+</li>
+                                    
+<li>
+    <a href="../../python/misc/" class="dropdown-item">Misc Python Topics</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Other <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../sqlserver/" class="dropdown-item">SQL Server</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../blog/" class="nav-link">Blog</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#how-to-enable-tracing-in-django-with-opencensus" class="nav-link">How to enable  tracing in Django with OpenCensus</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#preparation" class="nav-link">Preparation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#install-python-dependencies" class="nav-link">Install Python Dependencies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#create-django-app" class="nav-link">Create Django App</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#publish-the-site" class="nav-link">Publish the Site</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#things-to-consider" class="nav-link">Things to Consider</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#reference" class="nav-link">Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="how-to-enable-tracing-in-django-with-opencensus">How to enable  tracing in Django with OpenCensus</h1>
+<h2 id="preparation">Preparation</h2>
+<ol>
+<li>Create resource group <code>svetlina</code></li>
+<li>Create Log Analytics Workspace <code>svetlina-ws</code></li>
+<li>Create App Insights <code>svetlina-ai</code>, connected to <code>svetlina-ws</code></li>
+<li>Go to the App Insights <em>Properties</em> and note down the connection string.</li>
+<li>Create Web App <code>svetlina</code></li>
+<li>Modify Deployment Center -&gt; Source: Local Git</li>
+<li>Save</li>
+<li>Note the Git clone url: <code>https://svetlina.scm.azurewebsites.net:443/svetlina.git</code></li>
+<li>Define user credentials<ul>
+<li>svetlinauser/P@ssword1234</li>
+</ul>
+</li>
+<li>Clone the repository</li>
+<li>Provide credentials defined earlier. Git will remember in Windows Credentials store.  In case you need to change them, open Windows Credential Manger -&gt; Windows Credentials and remove the credentials `git:https://svetlina.scm.azurewebsites.net</li>
+<li>Python Virtual Environment:</li>
+</ol>
+<pre><code class="bash">$ git clone https://svetlina.scm.azurewebsites.net:443/svetlina.git
+...
+$ cd svetlina
+$ py -3.8 -m venv .venv38
+$ . .venv38/Scripts/activate
+...
+
+</code></pre>
+
+<h2 id="install-python-dependencies">Install Python Dependencies</h2>
+<p>Create <code>requirements.txt</code> file:</p>
+<pre><code>django
+opencensus-ext-django
+opencensus-ext-ocagent
+opencensus-ext-azure
+</code></pre>
+
+<p>Install the dependencies:</p>
+<pre><code class="bash">$ pip install -r requirements.txt
+</code></pre>
+
+<h2 id="create-django-app">Create Django App</h2>
+<h3 id="generate-default-django-site">Generate Default Django Site</h3>
+<pre><code class="bash">$ django-admin startproject mysite
+</code></pre>
+
+<p>Move the generated content from the <code>mysite</code> directory to the directory where the WebApp local git is cloned.</p>
+<h3 id="update-settingspy">Update <code>settings.py</code></h3>
+<p>You can find the <code>settings.py</code>  file under the <code>mysite</code> directory.</p>
+<p>For tracing Django requests, you will need to add the following line to the <code>MIDDLEWARE</code> section in the Django <code>settings.py</code> file.</p>
+<pre><code class="python">MIDDLEWARE = [
+    ...
+    'opencensus.ext.django.middleware.OpencensusMiddleware',
+]
+</code></pre>
+
+<p>Additional configuration can be provided, please read <a href="https://github.com/census-instrumentation/opencensus-python#customization">Customization</a> for a complete reference. In our case we need to provide exporter so that data is exported to Azure App Insights.</p>
+<pre><code class="python">OPENCENSUS = {
+    'TRACE': {
+        'SAMPLER': 'opencensus.trace.samplers.ProbabilitySampler(rate=1)',
+        'EXPORTER': '''opencensus.ext.azure.trace_exporter.AzureExporter(
+                  connection_string='&lt;your-app-insights-connection-string-here&gt;',
+        )''',
+    }
+}
+
+</code></pre>
+
+<p>You also need to modify the <code>ALLOWED_HOSTS</code> list. Add your azure WebApp domain name:</p>
+<pre><code class="python">ALLOWED_HOSTS = ['localhost', 'svetlina.azurewebsites.net']
+</code></pre>
+
+<h3 id="test-the-site-locally">Test the Site Locally</h3>
+<p>Start Django server</p>
+<pre><code class="bash">$ python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+May 06, 2021 - 09:46:59
+Django version 3.2.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+...........
+</code></pre>
+
+<p>Open a browser at http://127.0.0.1:8000/ </p>
+<p>Open your Application Insights in Azure Portal and go to <em>Search Transactions</em>. You should be able to see your views. </p>
+<p><em><strong>Note:</strong> It might take some time for the transactions to show up in App Insights.</em></p>
+<p><img alt="" src="../media/howto-enable-appinisght-tracing-for-django-using-opencensus/app-insights-transactions.png" /></p>
+<p><img alt="" src="../media/howto-enable-appinisght-tracing-for-django-using-opencensus/app-insights-transactions-list.png" /></p>
+<p>Stop the local server by pressing CTRL+C in the console window.</p>
+<h2 id="publish-the-site">Publish the Site</h2>
+<pre><code class="bash">$ git add .
+$ git commit -m &quot;initial version&quot;
+$ git push
+....
+</code></pre>
+
+<p>The last <code>git push</code> command will show detailed log how the app is being built and published to the WebApp.</p>
+<h3 id="test-the-live-site">Test the Live Site</h3>
+<p>Open the site: https://svetlina.azurewebsites.net/</p>
+<p><img alt="" src="../media/howto-enable-appinisght-tracing-for-django-using-opencensus/live-site.png" /></p>
+<p>Open <em>Transaction Search</em> for your AppInsights in Azure Portal:</p>
+<p><img alt="" src="../media/howto-enable-appinisght-tracing-for-django-using-opencensus/app-insights-transactions-list-live.png" /></p>
+<h2 id="things-to-consider">Things to Consider</h2>
+<h3 id="keep-the-appinsight-connection-string-secret">Keep the AppInsight Connection String Secret</h3>
+<p>We embedded the connection string directly into the code, because we are doing a quick PoC. Also the code is not leaving our local machine and the WebApp.</p>
+<p>When you are working on real project, secrets should be stored in Key Vault and/or as Application Setting for the WebApp.</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>
+<p>https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-azure</p>
+</li>
+<li>
+<p>https://github.com/census-instrumentation/opencensus-python</p>
+</li>
+<li>
+<p>https://github.com/census-instrumentation/opencensus-python/tree/master/contrib/opencensus-ext-django</p>
+</li>
+<li>
+<p>https://docs.djangoproject.com/en/3.2/intro/tutorial01/</p>
+</li>
+<li>
+<p>https://github.com/Basma-Elsaify/opencensus-python/tree/master/contrib/opencensus-ext-fastapi/opencensus/ext/fastapi</p>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
