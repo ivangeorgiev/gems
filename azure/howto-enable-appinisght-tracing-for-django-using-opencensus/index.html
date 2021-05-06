@@ -240,6 +240,13 @@ $ git push
 <h3 id="keep-the-appinsight-connection-string-secret">Keep the AppInsight Connection String Secret</h3>
 <p>We embedded the connection string directly into the code, because we are doing a quick PoC. Also the code is not leaving our local machine and the WebApp.</p>
 <p>When you are working on real project, secrets should be stored in Key Vault and/or as Application Setting for the WebApp.</p>
+<h3 id="publish-to-another-git">Publish to Another Git</h3>
+<p>For example, to publish on Github, create empty repository and use the similar commands:</p>
+<pre><code class="bash">$ git remote add github https://github.com/ivangeorgiev/django-appinsight-opencensus.git
+$ git push -u github master
+</code></pre>
+
+<p>This is how I published the repository: https://github.com/ivangeorgiev/django-appinsight-opencensus</p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>
@@ -256,6 +263,9 @@ $ git push
 </li>
 <li>
 <p>https://github.com/Basma-Elsaify/opencensus-python/tree/master/contrib/opencensus-ext-fastapi/opencensus/ext/fastapi</p>
+</li>
+<li>
+<p>https://pypi.org/project/django-health-check/</p>
 </li>
 </ul></div>
             </div>
