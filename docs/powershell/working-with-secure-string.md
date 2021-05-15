@@ -4,6 +4,13 @@
 
 ## Create `SecureString`
 
+There are many ways for creating `SecureString` . Most often we need to create `SecureString` :
+
+- From plain-text String
+- From host input
+
+There are other ways or sources of `SecureString` , e.g. Key Vault secrets, but we will limit to basic cases only as they give enough coverage and understanding to handle also other situations.
+
 ### From Plain Text String
 
 To create a `SecureString` from plain text string, use [`ConvertTo-SecureString`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring)

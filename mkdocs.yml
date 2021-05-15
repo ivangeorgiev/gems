@@ -10,3 +10,23 @@ nav:
     - Other:
       - SQL Server: sqlserver/index.md
     - Blog: blog/index.md
+markdown_extensions:
+  # Standard markdown extensions: https://python-markdown.github.io/sitemap.html
+  - admonition
+  - abbr
+  # pymdown extensions
+  # pip install pymdown-extensions
+  - pymdownx.keys  # https://facelessuser.github.io/pymdown-extensions/extensions/keys/
+  #- pymdownx.superfences:
+  #    custom_fences:
+  #      - name: mermaid101 # https://squidfunk.github.io/mkdocs-material/reference/diagrams/
+  #        class: mermaid
+  #        format: pymdownx.superfences.fence_div_format
+#          format: !!python/name:pymdownx.superfences.fence_code_format
+extra_javascript:
+  - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
+plugins:
+  # pip install mkdocs-plugin-mermaid
+  - markdownmermaid
+ 
+ 

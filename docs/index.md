@@ -2,6 +2,12 @@
 
 ## Latest Publications
 
+* [How to Migrate Git Repository with Full Commit History and Branches](devops/migrate-git-repository-with-full-history-and-branches.md)
+  *on May 15<sup>th</sup>, 2021*
+
+* [How to Enable Application Insight for Django Web App using OpenCensus](azure/howto-enable-appinisght-tracing-for-django-using-opencensus.md)
+  *on May 6<sup>th</sup>, 2021*
+
 * [Working with PowerShell SecureString](powershell/working-with-secure-string.md)
   *on May 4<sup>th</sup>, 2021*
 
