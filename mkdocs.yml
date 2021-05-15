@@ -14,6 +14,7 @@ markdown_extensions:
   # Standard markdown extensions: https://python-markdown.github.io/sitemap.html
   - admonition
   - abbr
+  - footnotes
   # pymdown extensions
   # pip install pymdown-extensions
   - pymdownx.keys  # https://facelessuser.github.io/pymdown-extensions/extensions/keys/
