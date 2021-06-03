@@ -2,48 +2,50 @@ from collections import namedtuple
 from enum import Enum
 
 RuleInfo = namedtuple('RuleInfo', 'name,rule')
-RuleErrorInfo = namedtuple('RuleErrorInfo', 'rule_name,row_id,error_type,error_text,row')
+RuleErrorInfo = namedtuple('RuleErrorInfo', 'rule_name,error_type,error_text')
+SkipRowInfo = namedtuple('SkipRowInfo', 'row_id,reason,errors,row')
 
-class ErrorAction(Enum):
-    """No action. Error is logged, but the row is sent to the output."""
-    NONE = 0
-    """Row with at least one error is skipped from output"""
-    SKIP = 1
+class SkipReason(Enum):
+    ERROR = 'ERROR'
 
 class DataTransformer():
     def __init__(self):
         self.rules = []
-        self._error_action = ErrorAction.SKIP
         self._id = None
         self._init()
 
     @property
-    def num_errors(self):
-        """Returns the number of errors logged by `apply` method.
-        
-        Note: Because one row might generate multiple errors, this
-        number might be higher than the number of rows with error.
+    def num_skipped(self):
+        """Returns the number of rows skipped by the `apply` method.
         """
-        return len(self.errors)
+        return len(self.skipped)
+
+    @property
+    def errored(self):
+        """Returns a list of SkipRowInfo objects for each row with `apply` error.
+        """
+        return [skip_info for skip_info in self.skipped if skip_info.reason==SkipReason.ERROR]
+
+    @property
+    def num_errored(self):
+        """Returns the number of rows with `apply` error.
+        """
+        return len(self.errored)
+
+    @property
+    def num_errors(self):
+        """Returns the total number of errors during `apply`.
+        """
+        return sum(map(lambda skip_info: len(skip_info.errors), self.skipped))
 
     @property
     def num_output(self):
         """Returns the number of errors returned by `apply` method."""
         return len(self.output)
 
-    @property
-    def num_skipped(self):
-        """Returns the number of rows skipped by `apply` method."""
-        return len(self.skipped)
-
-    def on_error(self, action):
-        """Set error action."""
-        self._error_action = action
-        return self
 
     def _init(self):
         """Initialize the transformer before applying the transformations."""
-        self.errors = []
         self.skipped = []
         self.output = []
         self.num_input = 0
@@ -63,7 +65,7 @@ class DataTransformer():
         return self
 
     def transform(self, rule, name=None):
-        """Append row transformation.
+        """Append a row transformation.
 
         Row transformation is a function/callable which takes one argument - `row`
         and returns the transformed row.
@@ -73,7 +75,7 @@ class DataTransformer():
         return self
     
     def transform_field(self, field_name, rule, name=None):
-        """Append field transformation.
+        """Append a field transformation.
 
         Field transformation is a function/callable which takes one argument - `value` - 
         the value of the input field with name `field_name` and returns the new value for that field.
@@ -102,8 +104,7 @@ class DataTransformer():
         ------------
         - `num_input` attribute contains the number of input rows processed by `apply` method
         - `output` same as the return result of the `apply` method
-        - `skipped` attribute contains a list of skipped (normally due to a transformation error)
-        - `errors`  a list of error RuleErrorInfo objects for each transformation error
+        - `skipped` attribute contains a list of SkipRowInfo for each skipped rows
 
         """
         self._init()
@@ -111,23 +112,24 @@ class DataTransformer():
         for index, row in enumerate(dataset):
             self.num_input += 1
             transformed_row = dict(row)
-            is_skip_row = False
+            row_errors = []
             for rule_info in self.rules:
                 try:
-                    transformed_row = rule_info.rule(row)
+                    transformed_row = rule_info.rule(transformed_row)
                 except Exception as exc:
-                    is_skip_row = (self._error_action == ErrorAction.SKIP)
-                    row_id = index if (self._id is None) else self._id(row) 
                     error_text = str(exc)
                     error = RuleErrorInfo(rule_name=rule_info.name,
-                                          row_id=row_id,
                                           error_type=type(exc).__name__,
                                           error_text=error_text,
-                                          row=row,
                                           )
-                    self.errors.append(error)
-            if is_skip_row:
-                self.skipped.append(row)
+                    row_errors.append(error)
+            if row_errors:
+                row_id = index if (self._id is None) else self._id(row)
+                skip_info = SkipRowInfo(row_id=row_id,
+                                        reason=SkipReason.ERROR,
+                                        errors=row_errors,
+                                        row=row)
+                self.skipped.append(skip_info)
             else:
                 result.append(transformed_row)
         return result

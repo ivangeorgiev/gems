@@ -1,8 +1,9 @@
 import unittest
+import pytest
 
 # For compatibility with Databricks notebook mode
 if 'DataTransformer' not in globals().keys():
-    from transform.transformer import DataTransformer, ErrorAction, RuleErrorInfo
+    from transform.transformer import DataTransformer, SkipRowInfo,RuleErrorInfo, SkipReason
 
 class TestDataTransformer(unittest.TestCase):
     def test_execute_Transformer_class_returns_instance(self):
@@ -15,8 +16,7 @@ class TestDataTransformer(unittest.TestCase):
         transformer = DataTransformer()
         result = transformer.apply(data)
         assert data == result
-        assert [] == transformer.errors
-        assert 0 == transformer.num_errors
+        assert [] == transformer.skipped
 
     def test_apply_with_rules_applies_rules(self):
         def upper(row):
@@ -29,7 +29,8 @@ class TestDataTransformer(unittest.TestCase):
 
         result = transformer.apply(data)
         assert expect == result
-        assert [] == transformer.errors
+        assert [] == transformer.skipped
+        assert 0 == transformer.num_skipped
         assert 0 == transformer.num_errors
 
     def test_apply_with_rules_applies_rules_and_errors(self):
@@ -47,38 +48,16 @@ class TestDataTransformer(unittest.TestCase):
 
         result = transformer.apply(data)
         assert expect == result
-        expect_errors = [RuleErrorInfo(rule_name='upper-name',
-                                       row_id=0,
-                                       row={'id': 1, 'name': 'Long John'},
+        expect_error_info = RuleErrorInfo(rule_name='upper-name',
                                        error_type=ValueError.__name__,
-                                       error_text="'name' length exceeds 5 characters")]
-        self.assertEqual(expect_errors, transformer.errors)
-        expect_num_errors = 1
-        actual_num_errors = transformer.num_errors
-        assert expect_num_errors == actual_num_errors
-
-    def test_apply_with_error_action_NONE(self):
-        def upper(row):
-            name_len = len(row['name'])
-            if name_len > 5:
-                raise ValueError("'name' length exceeds 5 characters")
-            row['name'] = row['name'].upper()
-            return row
-
-        data = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'Jane'}]
-        expect = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'JANE'}]
-
-        transformer = DataTransformer().on_error(ErrorAction.NONE).transform(upper, 'upper-name')
-
-        result = transformer.apply(data)
-        assert expect == result
-        expect_errors = [RuleErrorInfo(rule_name='upper-name',
-                                       row_id=0,
-                                       row={'id': 1, 'name': 'Long John'},
-                                       error_type=ValueError.__name__,
-                                       error_text="'name' length exceeds 5 characters")]
-        assert expect_errors == transformer.errors
-
+                                       error_text="'name' length exceeds 5 characters")
+        expect_skip = [SkipRowInfo(row_id=0,
+                                   reason=SkipReason.ERROR,
+                                   errors=[expect_error_info],
+                                   row={'id': 1, 'name': 'Long John'})]
+        self.assertEqual(expect_skip, transformer.skipped)
+        self.assertEqual(1, transformer.num_errors)
+        self.assertEqual(expect_skip, transformer.errored)
 
     def test_apply_with_error_logs_row_id_from_named_column(self):
         def upper(row):
@@ -89,18 +68,21 @@ class TestDataTransformer(unittest.TestCase):
             return row
 
         data = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'Jane'}]
-        expect = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'JANE'}]
+        expect = [ {'id': 2, 'name': 'JANE'}]
 
-        transformer = DataTransformer().id('id').on_error(ErrorAction.NONE).transform(upper, 'upper-name')
+        transformer = DataTransformer().id('id').transform(upper, 'upper-name')
 
         result = transformer.apply(data)
         assert expect == result
-        expect_errors = [RuleErrorInfo(rule_name='upper-name',
-                                       row_id=1,
-                                       row={'id': 1, 'name': 'Long John'},
+        expect_error_info = RuleErrorInfo(rule_name='upper-name',
                                        error_type=ValueError.__name__,
-                                       error_text="'name' length exceeds 5 characters")]
-        assert expect_errors == transformer.errors
+                                       error_text="'name' length exceeds 5 characters")
+        expect_skip = [SkipRowInfo(row_id=1,
+                                   reason=SkipReason.ERROR,
+                                   errors=[expect_error_info],
+                                   row={'id': 1, 'name': 'Long John'})]
+        self.assertEqual(expect_skip, transformer.skipped)
+
 
     def test_apply_with_error_logs_row_id_from_getter(self):
         def upper(row):
@@ -114,18 +96,21 @@ class TestDataTransformer(unittest.TestCase):
             return '{}|{}'.format(row['id'], row['name'])
 
         data = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'Jane'}]
-        expect = [ {'id': 1, 'name': 'Long John'}, {'id': 2, 'name': 'JANE'}]
+        expect = [ {'id': 2, 'name': 'JANE'}]
 
-        transformer = DataTransformer().id(id_getter).on_error(ErrorAction.NONE).transform(upper, 'upper-name')
+        transformer = DataTransformer().id(id_getter).transform(upper, 'upper-name')
 
         result = transformer.apply(data)
         assert expect == result
-        expect_errors = [RuleErrorInfo(rule_name='upper-name',
-                                       row_id='1|Long John',
-                                       row={'id': 1, 'name': 'Long John'},
+        expect_error_info = RuleErrorInfo(rule_name='upper-name',
                                        error_type=ValueError.__name__,
-                                       error_text="'name' length exceeds 5 characters")]
-        assert expect_errors == transformer.errors
+                                       error_text="'name' length exceeds 5 characters")
+        expect_skip = [SkipRowInfo(row_id='1|Long John',
+                                   reason=SkipReason.ERROR,
+                                   errors=[expect_error_info],
+                                   row={'id': 1, 'name': 'Long John'})]
+        self.assertEqual(expect_skip, transformer.skipped)
+
 
 
     def test_apply_with_field_transform(self):
@@ -135,4 +120,17 @@ class TestDataTransformer(unittest.TestCase):
         transformer = DataTransformer().transform_field('name', lambda f: f.upper())
 
         result = transformer.apply(data)
-        assert expect == result
+        self.assertEqual(expect, result)
+
+
+    def test_apply_with_changing_transform(self):
+        def select(row):
+            return dict(id=row['id'], name=row['name'])
+
+        data = [ {'id': 1, 'name': 'John', 'age':65}, {'id': 2, 'name': 'Jane', 'age':43}]
+        expect = [ {'id': 1, 'name': 'John'}, {'id': 2, 'name': 'Jane'}]
+
+        transformer = DataTransformer().transform(select, 'select')
+
+        result = transformer.apply(data)
+        self.assertEqual(expect, result)
