@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [How to avoid code repetition in Azure Yaml pipeline using loops](devops/azure-pipelines-use-each-loop.md)
+  *on May 16<sup>th</sup>, 2021*
+
 * [How to Migrate Git Repository with Full Commit History and Branches](devops/migrate-git-repository-with-full-history-and-branches.md)
   *on May 15<sup>th</sup>, 2021*
 

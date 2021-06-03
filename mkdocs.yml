@@ -1,4 +1,6 @@
 site_name: Gems
+theme:
+  name: material
 nav:
     - Home: index.md
     - Python:
@@ -15,19 +17,29 @@ markdown_extensions:
   - admonition
   - abbr
   - footnotes
+  - attr_list
+  - meta
   # pymdown extensions
   # pip install pymdown-extensions
   - pymdownx.keys  # https://facelessuser.github.io/pymdown-extensions/extensions/keys/
-  #- pymdownx.superfences:
-  #    custom_fences:
-  #      - name: mermaid101 # https://squidfunk.github.io/mkdocs-material/reference/diagrams/
-  #        class: mermaid
-  #        format: pymdownx.superfences.fence_div_format
-#          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: false
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+         - name: mermaid # https://squidfunk.github.io/mkdocs-material/reference/diagrams/
+           class: mermaid
+           format: !!python/name:pymdownx.superfences.fence_div_format
 extra_javascript:
   - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
-plugins:
-  # pip install mkdocs-plugin-mermaid
-  - markdownmermaid
+#plugins:
+#  # pip install mkdocs-plugin-mermaid
+#  - markdownmermaid
  
  
