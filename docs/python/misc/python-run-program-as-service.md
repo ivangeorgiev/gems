@@ -83,7 +83,7 @@ $ sudo tail -f /var/log/test-py.log
 ...
 ```
 
-## Managing the Service
+## Manage the Service
 
 You can start, stop, restart the service or get the service status:
 

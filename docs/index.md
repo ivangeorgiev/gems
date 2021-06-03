@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [How to run Python program as Linux systemd service](python/misc/python-run-program-as-service.md)
+  *on June 3<sup>rd</sup>, 2021*
+
 * [How to avoid code repetition in Azure Yaml pipeline using loops](devops/azure-pipelines-use-each-loop.md)
   *on May 16<sup>th</sup>, 2021*
 
