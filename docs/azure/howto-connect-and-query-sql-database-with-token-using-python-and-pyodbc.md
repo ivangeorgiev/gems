@@ -1,3 +1,8 @@
+---
+reference:
+  - https://www.linkedin.com/pulse/using-azure-ad-service-principals-connect-sql-from-python-andrade/
+---
+
 # Query SQL Database from Python using pyodbc and access token
 
 pyodbc is an open source Python module that makes accessing ODBC databases simple. It implements the Python's [DB API 2.0](https://www.python.org/dev/peps/pep-0249) specification
@@ -102,8 +107,7 @@ Example:
         with conn.cursor() as cursor:
             cursor.execute("SELECT getdate()")
             row = cursor.fetchone()
-            print(row[0])    
-    ```
+            print(row[0])
     """
     kwargs = kwargs or {}
     if (token):
@@ -116,5 +120,6 @@ Example:
         kwargs['attrs_before'] = { SQL_COPT_SS_ACCESS_TOKEN:tokenstruct}
     return kwargs
 ```
+
 
 
