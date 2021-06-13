@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [How to Connect to Azure SQL Database from Azure App Service using Python, pyodbc and Managed Identity](how-to-connect-sql-database-app-service-managed-identity-python-pyodbc.md)
+  *on June 13<sup>th</sup>, 2021*
+
 * [How to run Python program as Linux systemd service](python/misc/python-run-program-as-service.md)
   *on June 3<sup>rd</sup>, 2021*
 

@@ -102,6 +102,7 @@ Example:
     db_database = os.environ['DB_DATABASE']
     db_token = os.environ['DB_TOKEN']
     
+    connection_string = f"Driver={{ODBC Driver 17 for SQL Server}};Server={db_server};Database={db_database}"
     connect_kwargs = add_pyodbc_args_for_access_token(db_token)
     with pyodbc.connect(connection_string, **connect_kwargs) as conn:
         with conn.cursor() as cursor:
@@ -123,3 +124,6 @@ Example:
 
 
 
+# Further Reading
+
+* [Connect to Azure SQL Database form Azure App Service using Python, Pyodbc and Managed Identity](how-to-connect-sql-database-app-service-managed-identity-python-pyodbc.md)
