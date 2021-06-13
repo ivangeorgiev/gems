@@ -1,0 +1,604 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Connect to Azure SQL Database from App Service using Python, pyodbc and Managed Identity - Gems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#connect-to-azure-sql-database-from-app-service-using-python-pyodbc-and-managed-identity" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Gems" class="md-header__button md-logo" aria-label="Gems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Gems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Connect to Azure SQL Database from App Service using Python, pyodbc and Managed Identity
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Gems" class="md-nav__button md-logo" aria-label="Gems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Gems
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Python
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Python" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Python
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/design-patterns/" class="md-nav__link">
+        Design Patterns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/tdd/" class="md-nav__link">
+        Test Driven Development (TDD)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/kata/" class="md-nav__link">
+        Kata
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/tricks/" class="md-nav__link">
+        Tricks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/misc/" class="md-nav__link">
+        Misc Python Topics
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Other
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Other" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Other
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sqlserver/" class="md-nav__link">
+        SQL Server
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/" class="md-nav__link">
+        Blog
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    Preparation
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-assign-managed-identity-to-app-service" class="md-nav__link">
+    Step 1. Assign Managed Identity to App Service
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-database-contained-user" class="md-nav__link">
+    Step 2. Create Database Contained User
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-update-sql-server-firewall-settings" class="md-nav__link">
+    Step 3. Update SQL Server Firewall Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-database-connection" class="md-nav__link">
+    Test Database Connection
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Database Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-1-using-integrated-managed-identity-authentication" class="md-nav__link">
+    Method 1. Using Integrated Managed Identity authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-2-using-managed-identity-token" class="md-nav__link">
+    Method 2. Using Managed Identity Token
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="connect-to-azure-sql-database-from-app-service-using-python-pyodbc-and-managed-identity">Connect to Azure SQL Database from App Service using Python, pyodbc and Managed Identity</h1>
+<h2 id="preparation">Preparation</h2>
+<h3 id="step-1-assign-managed-identity-to-app-service">Step 1. Assign Managed Identity to App Service</h3>
+<p>From Azure Portal, open the App Service and select Settings -&gt; Identity from the left menu. Make sure the system assigned managed identity Status is set to On. If not, update it and save the configuration.</p>
+<p>Connect with SSH to verify that Managed Identity has been successfully enabled:</p>
+<div class="highlight"><pre><span></span><code>$ env <span class="p">|</span> grep IDENTITY
+<span class="nv">IDENTITY_ENDPOINT</span><span class="o">=</span>http://172.16.0.4:8081/msi/token
+<span class="nv">IDENTITY_HEADER</span><span class="o">=</span>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+</code></pre></div>
+
+<h3 id="step-2-create-database-contained-user">Step 2. Create Database Contained User</h3>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span> <span class="k">USER</span> <span class="o">&lt;</span><span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">FROM</span> <span class="k">EXTERNAL</span> <span class="n">PROVIDER</span><span class="p">;</span>
+<span class="k">ALTER</span> <span class="k">ROLE</span> <span class="n">db_datareader</span> <span class="k">ADD</span> <span class="n">MEMBER</span> <span class="o">&lt;</span><span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="k">ALTER</span> <span class="k">ROLE</span> <span class="n">db_datawriter</span> <span class="k">ADD</span> <span class="n">MEMBER</span> <span class="o">&lt;</span><span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="k">ALTER</span> <span class="k">ROLE</span> <span class="n">db_ddladmin</span> <span class="k">ADD</span> <span class="n">MEMBER</span> <span class="o">&lt;</span><span class="n">app</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+</code></pre></div>
+
+<p>For more information see: https://docs.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-configure?tabs=azure-powershell#create-contained-database-users-in-your-database-mapped-to-azure-ad-identities</p>
+<h3 id="step-3-update-sql-server-firewall-settings">Step 3. Update SQL Server Firewall Settings</h3>
+<ol>
+<li>Open your SQL Server in Azure Portal</li>
+<li><em>Select Security -&gt; Firewall and virtual networks</em> from the left menu</li>
+<li>Make sure <em>Allow Azure services and resources to access this server</em> is set to <em>Yes</em></li>
+</ol>
+<h2 id="test-database-connection">Test Database Connection</h2>
+<h3 id="method-1-using-integrated-managed-identity-authentication">Method 1. Using Integrated Managed Identity authentication</h3>
+<p>Create file <code>test_python_msi.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pyodbc</span>
+
+<span class="c1"># Configuration</span>
+<span class="n">db_azure_server</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_SERVER&#39;</span><span class="p">]</span>
+<span class="n">db_server</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">db_azure_server</span><span class="si">}</span><span class="s1">.database.windows.net&#39;</span>
+<span class="n">db_database</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_DATABASE&#39;</span><span class="p">]</span>
+
+<span class="n">connection_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Driver=</span><span class="se">{{</span><span class="s2">ODBC Driver 17 for SQL Server</span><span class="se">}}</span><span class="s2">;Server=</span><span class="si">{</span><span class="n">db_server</span><span class="si">}</span><span class="s2">;Database=</span><span class="si">{</span><span class="n">db_database</span><span class="si">}</span><span class="s2">;Authentication=ActiveDirectoryMsi&quot;</span>
+
+<span class="k">with</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT getdate()&quot;</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>    
+</code></pre></div>
+
+<p>Execute the file to test the connectivity:</p>
+<div class="highlight"><pre><span></span><code>$ python test_pyodbc_msi.py
+<span class="m">2021</span>-06-13 <span class="m">19</span>:06:10.387000
+</code></pre></div>
+
+<h3 id="method-2-using-managed-identity-token">Method 2. Using Managed Identity Token</h3>
+<p>Connect to the App Service using SSH and execute following code (see <a href="../howto-connect-and-query-sql-database-with-token-using-python-and-pyodbc/">Query SQL Database from Python using pyodbc and access token</a>). Place the code in file <code>test_pyodbc_msi_token.py</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pyodbc</span>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="kn">import</span> <span class="nn">struct</span>
+
+<span class="k">def</span> <span class="nf">add_pyodbc_args_for_access_token</span><span class="p">(</span><span class="n">token</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span><span class="nb">dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add pyodbc.connect arguments for SQL Server connection with token.</span>
+
+<span class="sd">    Based on https://docs.microsoft.com/en-us/sql/connect/odbc/using-azure-active-directory?view=sql-server-ver15</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    token : str</span>
+<span class="sd">        Access token.</span>
+<span class="sd">    kwargs: dict</span>
+<span class="sd">        Optional kwargs. If not provided, a new dictionary will be created.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Dictionary of pyodbc.connect keyword arguments.</span>
+<span class="sd">    Example:</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    ```python</span>
+<span class="sd">    import os</span>
+<span class="sd">    import pyodbc</span>
+
+<span class="sd">    # Configuration</span>
+<span class="sd">    db_azure_server = os.environ[&#39;DB_SERVER&#39;]</span>
+<span class="sd">    db_server = f&#39;{db_azure_server}.database.windows.net&#39;</span>
+<span class="sd">    db_database = os.environ[&#39;DB_DATABASE&#39;]</span>
+<span class="sd">    db_token = os.environ[&#39;DB_TOKEN&#39;]</span>
+
+<span class="sd">    connect_kwargs = add_pyodbc_args_for_access_token(db_token)</span>
+<span class="sd">    with pyodbc.connect(connection_string, **connect_kwargs) as conn:</span>
+<span class="sd">        with conn.cursor() as cursor:</span>
+<span class="sd">            cursor.execute(&quot;SELECT getdate()&quot;)</span>
+<span class="sd">            row = cursor.fetchone()</span>
+<span class="sd">            print(row[0])    </span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">token</span><span class="p">):</span>
+        <span class="n">SQL_COPT_SS_ACCESS_TOKEN</span> <span class="o">=</span> <span class="mi">1256</span>
+        <span class="n">exptoken</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">):</span>
+            <span class="n">exptoken</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">({</span><span class="n">i</span><span class="p">});</span>
+            <span class="n">exptoken</span> <span class="o">+=</span> <span class="nb">bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">tokenstruct</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;=i&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">exptoken</span><span class="p">))</span> <span class="o">+</span> <span class="n">exptoken</span><span class="p">;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;attrs_before&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="n">SQL_COPT_SS_ACCESS_TOKEN</span><span class="p">:</span><span class="n">tokenstruct</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">kwargs</span>
+
+
+<span class="n">identity_endpoint</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;IDENTITY_ENDPOINT&quot;</span><span class="p">]</span>
+<span class="n">identity_header</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;IDENTITY_HEADER&quot;</span><span class="p">]</span>
+<span class="n">resource_uri</span><span class="o">=</span><span class="s2">&quot;https://database.windows.net/&quot;</span>
+<span class="n">token_auth_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">identity_endpoint</span><span class="si">}</span><span class="s2">?resource=</span><span class="si">{</span><span class="n">resource_uri</span><span class="si">}</span><span class="s2">&amp;api-version=2019-08-01&quot;</span>
+<span class="n">head_msi</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;X-IDENTITY-HEADER&#39;</span><span class="p">:</span><span class="n">identity_header</span><span class="p">}</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">token_auth_uri</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">head_msi</span><span class="p">)</span>
+<span class="n">access_token</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span>
+
+<span class="c1"># Configuration</span>
+<span class="n">db_azure_server</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_SERVER&#39;</span><span class="p">]</span>
+<span class="n">db_server</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">db_azure_server</span><span class="si">}</span><span class="s1">.database.windows.net&#39;</span>
+<span class="n">db_database</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DB_DATABASE&#39;</span><span class="p">]</span>
+
+<span class="n">connection_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Driver=</span><span class="se">{{</span><span class="s2">ODBC Driver 17 for SQL Server</span><span class="se">}}</span><span class="s2">;Server=</span><span class="si">{</span><span class="n">db_server</span><span class="si">}</span><span class="s2">;Database=</span><span class="si">{</span><span class="n">db_database</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">connect_kwargs</span> <span class="o">=</span> <span class="n">add_pyodbc_args_for_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">connection_string</span><span class="p">,</span> <span class="o">**</span><span class="n">connect_kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span> <span class="k">as</span> <span class="n">cursor</span><span class="p">:</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT getdate()&quot;</span><span class="p">)</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>    
+</code></pre></div>
+
+<p>Test the connectivity by executing the Python script:</p>
+<div class="highlight"><pre><span></span><code>$ python test_pyodbc_msi_token.py
+<span class="m">2021</span>-06-13 <span class="m">19</span>:12:54.210000
+</code></pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+        <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+      
+    
+  </body>
+</html>
