@@ -96,6 +96,29 @@ You can verify the result:
 SELECT * FROM samples.city;
 ```
 
+Here is a sample output created using [mssql-cli](https://docs.microsoft.com/en-us/sql/tools/mssql-cli?view=sql-server-ver15):
+
+```
+contoso-sqldb> SELECT * FROM samples.city;
+Time: 1.309s (a second)
++-------------------------+--------------+
+| name                    | population   |
+|-------------------------+--------------|
+| Abilene                 | 115930       |
+| Akron                   | 217074       |
+| Albany                  | 93994        |
+| Albuquerque             | 448607       |
+| Alexandria              | 128283       |
+| Allentown               | 106632       |
+| Amarillo                | 173627       |
+| Anaheim                 | 328014       |
+| Anchorage               | 260283       |
+| Ann Arbor               | 114024       |
++-------------------------+--------------+
+(10 rows affected)
+contoso-sqldb>
+```
+
 
 
 ## Further reading
