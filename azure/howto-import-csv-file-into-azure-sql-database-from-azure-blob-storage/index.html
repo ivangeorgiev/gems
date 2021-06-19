@@ -491,6 +491,27 @@ Ann Arbor,114024
 <div class="highlight"><pre><span></span><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">samples</span><span class="p">.</span><span class="n">city</span><span class="p">;</span>
 </code></pre></div>
 
+<p>Here is a sample output created using <a href="https://docs.microsoft.com/en-us/sql/tools/mssql-cli?view=sql-server-ver15">mssql-cli</a>:</p>
+<div class="highlight"><pre><span></span><code>contoso-sqldb&gt; SELECT * FROM samples.city;
+Time: 1.309s (a second)
++-------------------------+--------------+
+| name                    | population   |
+|-------------------------+--------------|
+| Abilene                 | 115930       |
+| Akron                   | 217074       |
+| Albany                  | 93994        |
+| Albuquerque             | 448607       |
+| Alexandria              | 128283       |
+| Allentown               | 106632       |
+| Amarillo                | 173627       |
+| Anaheim                 | 328014       |
+| Anchorage               | 260283       |
+| Ann Arbor               | 114024       |
++-------------------------+--------------+
+(10 rows affected)
+contoso-sqldb&gt;
+</code></pre></div>
+
 <h2 id="further-reading">Further reading</h2>
 <ul>
 <li><a href="https://docs.microsoft.com/en-us/sql/relational-databases/import-export/import-bulk-data-by-using-bulk-insert-or-openrowset-bulk-sql-server?view=sql-server-ver15">Use BULK INSERT or OPENROWSET(BULK...) to import data to SQL Server</a></li>
