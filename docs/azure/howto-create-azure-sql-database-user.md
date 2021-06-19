@@ -118,3 +118,25 @@ JOIN sys.database_principals m
 ORDER BY m.name, r.name;
 ```
 
+## Bonus tip - Command Line Interface to MSSQL - mssql-cli
+
+The default option to connect to MSSQL or Azure SQL is to use `sqlcmd` client tool. Recently I discovered another great tool called `mssql-cli` written in Python.
+
+```bash
+$ pip install mssql-cli
+```
+
+To test the CLI try a simple SQL statement:
+
+```bash
+$ mssql-cli -S contoso-sqlsrv.database.windows.net -d contoso-sqldb -U contoso-sqldb-reader -P contoso-password -Q "SELECT GETDATE()"
+```
+
+To use the CLI in interactive mode:
+
+```bash
+$ mssql-cli -S contoso-sqlsrv.database.windows.net -d contoso-sqldb -U contoso-sqldb-reader -P contoso-password
+```
+
+You can learn more about the CLI from the project's [Github page](https://github.com/dbcli/mssql-cli) or from [Microsoft's mssql-cli page](https://docs.microsoft.com/en-us/sql/tools/mssql-cli?view=sql-server-ver15).
+
