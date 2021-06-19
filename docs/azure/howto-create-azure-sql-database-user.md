@@ -17,7 +17,27 @@ This quick tip, talks about creating Azure SQL Database logins and users after y
 CREATE LOGIN <login-name> WITH password='<password>';
 ```
 
-You must be connected to the master database on SQL Azure with the administrative login (which you get from the SQL Azure portal) to execute the CREATE LOGIN command. Connect to your Azure SQL Database server as an admin via SQL Server Management Studio or Azure Data Studio.
+You must be connected to the `master` database on SQL Azure with the administrative login (which you get from the SQL Azure portal) to execute the CREATE LOGIN command. Connect to your Azure SQL Database server as an admin via SQL Server Management Studio or Azure Data Studio.
+
+In the following example, we use mssql-cli interactive session to create a new login, list all logins and remove the login we just created.
+
+```bash
+$ mssql-cli -S contoso-sqlsrv.database.windows.net -d master -U contoso-dbo -P contoso-dbo-password
+master> CREATE LOGIN [contoso-reader] WITH password='Password6132';
+Time: 0.304s
+Commands completed successfully.
+master> SELECT name FROM [sys].[sql_logins];
+Time: 0.554s
++----------------+
+| name           |
+|----------------|
+| contoso-reader |
++----------------+
+(1 row affected)
+master> DROP LOGIN [contoso-reader]
+```
+
+
 
 ### Step 2. Create database user
 
