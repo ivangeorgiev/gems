@@ -403,6 +403,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#bonus-tip-command-line-interface-to-mssql-mssql-cli" class="md-nav__link">
+    Bonus tip - Command Line Interface to MSSQL - mssql-cli
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -493,6 +500,21 @@
     <span class="k">ON</span> <span class="n">rm</span><span class="p">.</span><span class="n">member_principal_id</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">principal_id</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">m</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">name</span><span class="p">;</span>
 </code></pre></div>
+
+<h2 id="bonus-tip-command-line-interface-to-mssql-mssql-cli">Bonus tip - Command Line Interface to MSSQL - mssql-cli</h2>
+<p>The default option to connect to MSSQL or Azure SQL is to use <code>sqlcmd</code> client tool. Recently I discovered another great tool called <code>mssql-cli</code> written in Python.</p>
+<div class="highlight"><pre><span></span><code>$ pip install mssql-cli
+</code></pre></div>
+
+<p>To test the CLI try a simple SQL statement:</p>
+<div class="highlight"><pre><span></span><code>$ mssql-cli -S contoso-sqlsrv.database.windows.net -d contoso-sqldb -U contoso-sqldb-reader -P contoso-password -Q <span class="s2">&quot;SELECT GETDATE()&quot;</span>
+</code></pre></div>
+
+<p>To use the CLI in interactive mode:</p>
+<div class="highlight"><pre><span></span><code>$ mssql-cli -S contoso-sqlsrv.database.windows.net -d contoso-sqldb -U contoso-sqldb-reader -P contoso-password
+</code></pre></div>
+
+<p>You can learn more about the CLI from the project's <a href="https://github.com/dbcli/mssql-cli">Github page</a> or from <a href="https://docs.microsoft.com/en-us/sql/tools/mssql-cli?view=sql-server-ver15">Microsoft's mssql-cli page</a>.</p>
                 
                   
                 
