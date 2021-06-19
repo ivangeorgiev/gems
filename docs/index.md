@@ -2,6 +2,12 @@
 
 ## Latest Publications
 
+* [How to import CSV file from Azure Blob storage into Azure SQL Database using T-SQL](azure/howto-import-csv-file-into-azure-sql-database-from-azure-blob-storage.md)
+  *on June 19<sup>th</sup>, 2021*
+
+* [How to database logins and users for Azure SQL Database](azure/howto-create-azure-sql-database-user.md)
+  *on June 19<sup>th</sup>, 2021*
+
 * [How to Connect to Azure SQL Database from Azure App Service using Python, pyodbc and Managed Identity](azure/how-to-connect-sql-database-app-service-managed-identity-python-pyodbc.md)
   *on June 13<sup>th</sup>, 2021*
 
