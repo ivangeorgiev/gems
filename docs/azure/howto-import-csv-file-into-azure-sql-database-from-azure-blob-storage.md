@@ -1,3 +1,9 @@
+---
+reference:
+  - https://docs.microsoft.com/en-us/azure/azure-sql/load-from-csv-with-bcp
+  - bcp samples.city in "C:\mydata\city.csv" -F 2 -S contoso-sqlsrv.database.windows.net -d contoso-sqldb -U baobab -P contoso564-Pwd -q -c -t  ,
+---
+
 # Import CSV file from Azure Blob Storage into Azure SQL Database using T-SQL
 
 ## Scenario
