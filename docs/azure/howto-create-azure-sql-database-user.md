@@ -5,7 +5,7 @@ reference:
   - https://docs.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-configure?tabs=azure-powershell
 ---
 
-# How to database logins and users for Azure SQL Database
+# How to create database logins and users for Azure SQL Database
 
 This quick tip, talks about creating Azure SQL Database logins and users after you have performed an initial setup of your Azure SQL Database server and defined the admin user. I will also show how database user can be removed and how to keep track on assigned roles.
 
