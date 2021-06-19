@@ -430,7 +430,23 @@
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span> <span class="n">LOGIN</span> <span class="o">&lt;</span><span class="n">login</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">WITH</span> <span class="n">password</span><span class="o">=</span><span class="s1">&#39;&lt;password&gt;&#39;</span><span class="p">;</span>
 </code></pre></div>
 
-<p>You must be connected to the master database on SQL Azure with the administrative login (which you get from the SQL Azure portal) to execute the CREATE LOGIN command. Connect to your Azure SQL Database server as an admin via SQL Server Management Studio or Azure Data Studio.</p>
+<p>You must be connected to the <code>master</code> database on SQL Azure with the administrative login (which you get from the SQL Azure portal) to execute the CREATE LOGIN command. Connect to your Azure SQL Database server as an admin via SQL Server Management Studio or Azure Data Studio.</p>
+<p>In the following example, we use mssql-cli interactive session to create a new login, list all logins and remove the login we just created.</p>
+<div class="highlight"><pre><span></span><code>$ mssql-cli -S contoso-sqlsrv.database.windows.net -d master -U contoso-dbo -P contoso-dbo-password
+master&gt; CREATE LOGIN <span class="o">[</span>contoso-reader<span class="o">]</span> WITH <span class="nv">password</span><span class="o">=</span><span class="s1">&#39;Password6132&#39;</span><span class="p">;</span>
+Time: <span class="m">0</span>.304s
+Commands completed successfully.
+master&gt; SELECT name FROM <span class="o">[</span>sys<span class="o">]</span>.<span class="o">[</span>sql_logins<span class="o">]</span><span class="p">;</span>
+Time: <span class="m">0</span>.554s
++----------------+
+<span class="p">|</span> name           <span class="p">|</span>
+<span class="p">|</span>----------------<span class="p">|</span>
+<span class="p">|</span> contoso-reader <span class="p">|</span>
++----------------+
+<span class="o">(</span><span class="m">1</span> row affected<span class="o">)</span>
+master&gt; DROP LOGIN <span class="o">[</span>contoso-reader<span class="o">]</span>
+</code></pre></div>
+
 <h3 id="step-2-create-database-user">Step 2. Create database user</h3>
 <div class="highlight"><pre><span></span><code><span class="k">CREATE</span> <span class="k">USER</span> <span class="o">&lt;</span><span class="k">user</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> <span class="k">FROM</span> <span class="n">LOGIN</span> <span class="o">&lt;</span><span class="n">login</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="p">;</span>
 </code></pre></div>
