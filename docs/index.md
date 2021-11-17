@@ -4,7 +4,8 @@
 
 * [How to Remove Field from Django Rest Framework Serializer Output](python/django/python-django-rest-framework-remove-serialized-field.md)
   *on November 17<sup>th</sup>, 2021*
-
+* [How to Connect Django to Mcirsoft SQL Server (MSSQL) Database](python/django/python-django-connect-sql-server-mssql-database.md)
+  *on July 26th, 2021*
 * [How to import CSV file from Azure Blob storage into Azure SQL Database using T-SQL](azure/howto-import-csv-file-into-azure-sql-database-from-azure-blob-storage.md)
   *on June 19<sup>th</sup>, 2021*
 
