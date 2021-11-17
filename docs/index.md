@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [How to Connect Django to Mcirsoft SQL Server (MSSQL) Database](python/django/python-django-connect-sql-server-mssql-database.md)
+  *on July 26th, 2021*
+
 * [How to import CSV file from Azure Blob storage into Azure SQL Database using T-SQL](azure/howto-import-csv-file-into-azure-sql-database-from-azure-blob-storage.md)
   *on June 19<sup>th</sup>, 2021*
 
