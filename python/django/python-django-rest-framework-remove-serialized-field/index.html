@@ -404,29 +404,47 @@
 <h2 id="discussion">Discussion</h2>
 <p>To make the solution more reusable, you could create a mix-in class:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DropFieldsSerializerMixin</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">drop_representation_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">representation</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Drop fields listed in Meta.drop_fields attribute from serializer representation&quot;&quot;&quot;</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Meta&#39;</span><span class="p">,</span> <span class="nb">object</span><span class="p">()),</span> <span class="s1">&#39;drop_fields&#39;</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">drop_representation_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">representation</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> <span class="n">fields</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Drop a one or more fields from serializer representation&quot;&quot;&quot;</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="n">fields</span><span class="p">,)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">fields</span>
         <span class="k">for</span> <span class="n">remove_field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
             <span class="n">representation</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">remove_field</span><span class="p">)</span>
 </code></pre></div>
 
 <p>You could use the mix-in to remove (drop) fields from the serializer output:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">UserSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">,</span> <span class="n">DropFieldsSerializerMixin</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
-
     <span class="k">def</span> <span class="nf">to_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
-        <span class="c1"># Here you might have logic to determine which fields to be dropped</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Meta</span><span class="o">.</span><span class="n">drop_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">,)</span>
-        <span class="c1"># Drop fields defined in the Meta class drop_fields attribute</span>
         <span class="n">representation</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_representation</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">drop_representation_fields</span><span class="p">(</span><span class="n">representation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_representation_fields</span><span class="p">(</span><span class="n">representation</span><span class="p">,</span> <span class="s1">&#39;salary&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">representation</span>
 </code></pre></div>
 
-<p>In this approach fields that need to be removed are defined, using the Meta class. If a collection of field names is assigned to the Meta class drop_fields attribute, these fields will be removed from the output. </p>
-<p>You could use some logic during the object creation (<code>__init__</code> method), the <code>to_representation</code> method, etc.</p>
+<p>A unit test (pytest) to test our drop serializer field mix-in might look like:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">mylib.django.restframework</span> <span class="kn">import</span> <span class="n">serializers</span>
+
+<span class="k">class</span> <span class="nc">MySerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">DropFieldsSerializerMixin</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">test_drop_representation_fields_removes_single_field</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">city</span><span class="o">=</span><span class="s1">&#39;Sofia&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span> <span class="n">salary</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">city</span><span class="o">=</span><span class="s1">&#39;Sofia&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">)</span>
+
+    <span class="n">serializer</span> <span class="o">=</span> <span class="n">MySerializer</span><span class="p">()</span>
+    <span class="n">serializer</span><span class="o">.</span><span class="n">drop_representation_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;salary&#39;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">data</span> <span class="o">==</span> <span class="n">expected</span>
+
+<span class="k">def</span> <span class="nf">test_drop_representation_fields_removes_multiple_field</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">city</span><span class="o">=</span><span class="s1">&#39;Sofia&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">,</span> <span class="n">salary</span><span class="o">=</span><span class="mf">1e6</span><span class="p">)</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;John Doe&#39;</span><span class="p">)</span>
+
+    <span class="n">serializer</span> <span class="o">=</span> <span class="n">MySerializer</span><span class="p">()</span>
+    <span class="n">serializer</span><span class="o">.</span><span class="n">drop_representation_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">))</span>
+
+    <span class="k">assert</span> <span class="n">data</span> <span class="o">==</span> <span class="n">expected</span>
+</code></pre></div>
+
+<p>You could add further test cases to verify scenarios like "raises keyerror when trying to drop missing field". Or you might decide to silently ignore missing fields and handle the KeyError exception in the mix-in class and implement test scenario "silently ignores missing field".</p>
                 
               
               
