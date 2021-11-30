@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Test HTTP and API interactions with vcrpy](python/tdd/python-test-http-api-interactions-requests-vcrpy.md)
+  *on November 30<sup>th</sup>, 2021*
+  
 * [How to execute unit tests before committing or pushing code to git](devops/git-how-to-run-unit-tests-before-commit-or-push-code.md)
   *on November 29<sup>th</sup>, 2021*
   
