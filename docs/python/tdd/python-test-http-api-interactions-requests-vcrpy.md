@@ -93,7 +93,9 @@ TOTAL                    41      6    85%
 
 
 
+## Complete example
 
+You can find the complete example in Github: https://github.com/ivangeorgiev/pyvcr-examples/tree/main/star-wars-api
 
 
 
