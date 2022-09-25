@@ -375,6 +375,35 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simple-event-driven-python-example-explained" class="md-nav__link">
+    Simple Event Driven Python Example - Explained
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-event-driven-python-example-full-code" class="md-nav__link">
+    Simple Event Driven Python Example - Full Code
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-driven-python-with-pubsub-advanced-example" class="md-nav__link">
+    Event Driven Python with pubsub - Advanced Example
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -389,6 +418,158 @@
 
 
 <h1 id="event-driven-python-with-pubsub">Event-Driven Python with pubsub</h1>
+<h2 id="simple-event-driven-python-example-explained">Simple Event Driven Python Example - Explained</h2>
+<p>We will use a fictious ordering system to demonstrate the implementation of event-driven
+system in Python.</p>
+<p>We need to implement a workflow with following steps:
+1. Order is placed by a customer
+2. Order is created by persisting it to the database
+3. Sales department receives a notfication about the new order</p>
+<p>All the source for this example is available in <a href="https://github.com/ivangeorgiev/python-pubsub-example/blob/main/simple_pubsub.py">GitHub</a>.</p>
+<p>Let's start by installing the <code>pypubsub</code> package:</p>
+<div class="highlight"><pre><span></span><code>$ pip install pypubsub
+</code></pre></div>
+<p>Our order is very simple - just a list items. Each item is represented by a string:</p>
+<div class="highlight"><pre><span></span><code><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;100 inch TV&quot;</span><span class="p">,</span> <span class="s2">&quot;magic carpet&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>To store the order we need a bit more complex strucure. We use a dictionary with two items: order id and order items. 
+We are using <code>uuid4()</code> to generate unique order id.</p>
+<div class="highlight"><pre><span></span><code><span class="n">order</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">uuid4</span><span class="p">(),</span>
+    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;100 inch TV&quot;</span><span class="p">,</span> <span class="s2">&quot;magic carpet&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>As database we use Python dictionary. As dictionary key we use the order id:</p>
+<div class="highlight"><pre><span></span><code><span class="n">orders</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">UUID</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div>
+<p>Saving an order to the database is as simple as adding a key to the <code>orders</code> dictionary.</p>
+<div class="highlight"><pre><span></span><code><span class="n">orders</span><span class="p">[</span><span class="n">order</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">order</span>
+</code></pre></div>
+<p>Our system uses <code>pubsub</code> to orchestrate messages with two topics:</p>
+<div class="highlight"><pre><span></span><code>PLACE_ORDER_TOPIC = &#39;place-order&#39;
+ORDER_CREATED_TOPIC = &#39;order-created&#39;
+</code></pre></div>
+<p>When an order is placed by a customer, we want to call a service function which takes care about
+creating a new order object and storing it into the database. Once the order is created, an event
+is triggered to notify other parts of the system:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">place_order</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">orders</span><span class="p">[</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">order</span>
+    <span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">ORDER_CREATED_TOPIC</span><span class="p">,</span> <span class="n">order_id</span><span class="o">=</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</code></pre></div>
+<p>We need to subscribe the <code>place_order</code> handler to the <code>PLACE_ORDER_TOPIC</code> command topic:</p>
+<div class="highlight"><pre><span></span><code><span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">place_order</span><span class="p">,</span> <span class="n">PLACE_ORDER_TOPIC</span><span class="p">)</span>
+</code></pre></div>
+<p>To notify the sales department about new orders, we are listening for events on the <code>ORDER_CREATED_TOPIC</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">notify_sales</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">order_created</span><span class="p">(</span><span class="n">order_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">orders</span><span class="p">[</span><span class="n">order_id</span><span class="p">]</span>
+    <span class="n">notify_sales</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;============</span><span class="se">\n</span><span class="s2">New Order:</span><span class="se">\n</span><span class="s2">============</span><span class="se">\n</span><span class="s2">ID: </span><span class="si">{</span><span class="n">order</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">Items: </span><span class="si">{</span><span class="n">order</span><span class="p">[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">order_created</span><span class="p">,</span> <span class="n">ORDER_CREATED_TOPIC</span><span class="p">)</span>
+</code></pre></div>
+<p>Publishing a message to the <code>PLACE_ORDER_TOPIC</code> will kick our process:
+- Trigger the <code>place_order</code> handler which will store the order and place a message to the <code>ORDER_CREATED_TOPIC</code>
+- Trigger the <code>order_created</code> handler which will call the <code>notify_sales</code> service function</p>
+<div class="highlight"><pre><span></span><code><span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;100 inch TV&quot;</span><span class="p">,</span> <span class="s2">&quot;magic carpet&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>This will produce following output:</p>
+<div class="highlight"><pre><span></span><code>============
+New Order:
+============
+ID: aafc3ad9-417c-484b-8ed7-3960e7241ba8
+Items: [&#39;100 inch TV&#39;, &#39;magic carpet&#39;]
+</code></pre></div>
+<h2 id="simple-event-driven-python-example-full-code">Simple Event Driven Python Example - Full Code</h2>
+<p>Below is the full source code (file <code>simple_pubsub.py</code>) for our simple event-driven sales system in Python:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">uuid4</span>
+<span class="kn">from</span> <span class="nn">pubsub</span> <span class="kn">import</span> <span class="n">pub</span>
+
+<span class="n">PLACE_ORDER_TOPIC</span> <span class="o">=</span> <span class="s1">&#39;place-order&#39;</span>
+<span class="n">ORDER_CREATED_TOPIC</span> <span class="o">=</span> <span class="s1">&#39;order-created&#39;</span>
+
+<span class="n">orders</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">UUID</span><span class="p">,</span> <span class="s1">&#39;Order&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">place_order</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">Order</span><span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">orders</span><span class="p">[</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">order</span>
+    <span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">ORDER_CREATED_TOPIC</span><span class="p">,</span> <span class="n">order_id</span><span class="o">=</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">notify_sales</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">order_created</span><span class="p">(</span><span class="n">order_id</span><span class="p">:</span> <span class="n">UUID</span><span class="p">):</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">orders</span><span class="p">[</span><span class="n">order_id</span><span class="p">]</span>
+    <span class="n">notify_sales</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;============</span><span class="se">\n</span><span class="s2">New Order:</span><span class="se">\n</span><span class="s2">============</span><span class="se">\n</span><span class="s2">ID: </span><span class="si">{</span><span class="n">order</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\n</span><span class="s2">Items: </span><span class="si">{</span><span class="n">order</span><span class="o">.</span><span class="n">items</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">place_order</span><span class="p">,</span> <span class="n">PLACE_ORDER_TOPIC</span><span class="p">)</span>
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">order_created</span><span class="p">,</span> <span class="n">ORDER_CREATED_TOPIC</span><span class="p">)</span>
+
+<span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;100 inch TV&quot;</span><span class="p">,</span> <span class="s2">&quot;magic carpet&quot;</span><span class="p">])</span>
+<span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;soft cheese&quot;</span><span class="p">,</span> <span class="s2">&quot;dutch mashrooms&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>Running the <code>simple_pubsub.py</code> produces two notifications about placed orders:</p>
+<div class="highlight"><pre><span></span><code>============
+New Order:
+============
+ID: aafc3ad9-417c-484b-8ed7-3960e7241ba8
+Items: [&#39;100 inch TV&#39;, &#39;magic carpet&#39;]
+============
+New Order:
+============
+ID: 6d9be0ec-6671-43d8-81c7-a2aa317d375c
+Items: [&#39;soft cheese&#39;, &#39;dutch mashrooms&#39;]
+</code></pre></div>
+<h2 id="event-driven-python-with-pubsub-advanced-example">Event Driven Python with pubsub - Advanced Example</h2>
+<p>The same scenario could be implemented by using more advanced and more flexible architecture.</p>
+<p>You could find the full example in <a href="https://github.com/ivangeorgiev/python-pubsub-example">github</a>.</p>
+<p>We define a <code>Messager</code> (<code>orders.message</code> module) class as base class for messages passed to pubsub. Further we define two sub-classes: <code>Event</code> (<code>orders.events</code> module) and <code>Command</code> (<code>orders.commands</code> module).</p>
+<p>Following commands are defined:</p>
+<ul>
+<li><code>PlaceOrder</code> create a new order</li>
+<li><code>NotifySales</code> send a message to Sales department</li>
+</ul>
+<p>For our application we define single <code>Event</code>:</p>
+<ul>
+<li><code>OrderCreated</code> to be triggered once order is created</li>
+</ul>
+<p>We also define handlers (<code>orders.handlers</code> module):</p>
+<ul>
+<li><code>place_order</code> - handle the <code>PlaceOrder</code> command</li>
+<li><code>notify_sales</code> - handle the <code>NotifySales</code> command</li>
+<li><code>order_created</code> - handle the <code>OrderCreated</code> event</li>
+</ul>
+<p>To provide persistence we also need a repository (<code>orders.repository</code> module). As storage layer we use TinyDB package to save
+our orders in JSON file.</p>
+<p>Everything is put together in the <code>advanced_pubsub.py</code> file:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pubsub</span> <span class="kn">import</span> <span class="n">pub</span>
+<span class="kn">from</span> <span class="nn">orders</span> <span class="kn">import</span> <span class="n">commands</span><span class="p">,</span> <span class="n">handlers</span><span class="p">,</span> <span class="n">settings</span>
+
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">handlers</span><span class="o">.</span><span class="n">place_order</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">)</span>
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">handlers</span><span class="o">.</span><span class="n">order_created</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">ORDER_CREATED_TOPIC</span><span class="p">)</span>
+<span class="n">pub</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">handlers</span><span class="o">.</span><span class="n">notify_sales</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">NOTIFY_SALES_TOPIC</span><span class="p">)</span>
+
+<span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">PlaceOrder</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;100 inch TV&quot;</span><span class="p">,</span> <span class="s2">&quot;magic carpet&quot;</span><span class="p">]))</span>
+<span class="n">pub</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">PLACE_ORDER_TOPIC</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">PlaceOrder</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;soft cheese&quot;</span><span class="p">,</span> <span class="s2">&quot;dutch mashrooms&quot;</span><span class="p">]))</span>
+</code></pre></div>
+<p>Here we register pubsub listeners and submit two <code>PlaceOrder</code> commands.</p>
+<p>The output is the same as in the simple example:</p>
+<div class="highlight"><pre><span></span><code>============
+New Order:
+============
+ID: 35f18675-7600-48ca-bf5d-48a303ab70fb
+Items: [&#39;100 inch TV&#39;, &#39;magic carpet&#39;]
+============
+New Order:
+============
+ID: b07794c7-21f7-4eea-b3a7-986f6098235f
+Items: [&#39;soft cheese&#39;, &#39;dutch mashrooms&#39;]
+</code></pre></div>
 
 
 
