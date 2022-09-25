@@ -544,7 +544,7 @@ Items: [&#39;soft cheese&#39;, &#39;dutch mashrooms&#39;]
 <li><code>notify_sales</code> - handle the <code>NotifySales</code> command</li>
 <li><code>order_created</code> - handle the <code>OrderCreated</code> event</li>
 </ul>
-<p>To provide persistence we also need a repository (<code>orders.repository</code> module). As storage layer we use TinyDB package to save
+<p>To provide persistence we also need a repository (<code>orders.repository</code> module). As storage layer we use the [TinyDB])(https://tinydb.readthedocs.io/) package to save
 our orders in JSON file.</p>
 <p>Everything is put together in the <code>advanced_pubsub.py</code> file:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pubsub</span> <span class="kn">import</span> <span class="n">pub</span>
