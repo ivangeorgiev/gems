@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Event Driven Python with pubsub](python/misc/python-event-driven-with-pubsub.md)
+  *on September 25<sup>th<sup>, 2022*
+  
 * [Test HTTP and API interactions with vcrpy](python/tdd/python-test-http-api-interactions-requests-vcrpy.md)
   *on November 30<sup>th</sup>, 2021*
   

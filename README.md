@@ -13,10 +13,14 @@ Ivan gems site
 $ py -3.8 -m venv .venv38
 $ source .venv38/Scripts/activate
 $ python -m pip install --upgrade pip
-$ pip install mkdocs
+$ pip install -r requirements.txt
 ```
 
+To run mkdocs live server:
 
+```bash
+$ mkdocs serve
+```
 
 Build
 

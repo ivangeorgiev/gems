@@ -2,7 +2,7 @@
 # Misc Python Topics
 
 
-
+* [Event Driven Python with pubsub](python-event-driven-with-pubsub.md)
 * [Document REST APIs based on Python Django's Rest Framework](python-django-rest-framework-openapi-documentation.md)
   *on October 12<sup>th</sup>, 2020, in [Python](../../python/index.md) :: [Misc Topics](../../python/misc/index.md)*
 * [Add OpeanAPI documentation and SwaggerUI to your Django Rest Framework project](python-django-rest-framework-opeanapi-swagger-documentation.md)
