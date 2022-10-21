@@ -2,8 +2,14 @@
 
 ## Latest Publications
 
+* [Dynamic Method Binding in Python](python/misc/python-dyanmic-method-binding.md)
+  *on October 21<sup>th</sup>, 2022*
+
+* [Python Class Decorator Primer - Class Instance Registry](python/misc/python-class-decorator-class-registry.md)
+  *on October 21<sup>th</sup>, 2022*
+  
 * [Event Driven Python with pubsub](python/misc/python-event-driven-with-pubsub.md)
-  *on September 25<sup>th<sup>, 2022*
+  *on September 25<sup>th</sup>, 2022*
   
 * [Test HTTP and API interactions with vcrpy](python/tdd/python-test-http-api-interactions-requests-vcrpy.md)
   *on November 30<sup>th</sup>, 2021*

@@ -1,6 +1,8 @@
 
 # Misc Python Topics
 
+* [Dynamic Method Binding in Python](python-dyanmic-method-binding.md)
+* [Python Class Decorator Primer - Class Instance Registry](python-class-decorator-class-registry.md)
 
 * [Event Driven Python with pubsub](python-event-driven-with-pubsub.md)
 * [Document REST APIs based on Python Django's Rest Framework](python-django-rest-framework-openapi-documentation.md)
