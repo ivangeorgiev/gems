@@ -410,9 +410,14 @@
 <p>First function <code>pytest_addoption</code> is a pytest hook which is executed during command line options setup. The function adds the <code>--integration</code>  command line option to pytest.</p>
 <p>The second function <code>pytest_runtest_setup</code> is a pytest hook which is invoked during the setup for each test. If the test is marked with <code>integration</code> it will be skipped.</p>
 <p>You could mark all tests from a python file as integration tests:</p>
-<p>```python</p>
-<h1 id="test_somethingpy">test_something.py</h1>
-<p>pytestmark = pytest.mark.integration</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># test_something.py</span>
+
+<span class="c1"># ... your code ...</span>
+
+<span class="n">pytestmark</span> <span class="o">=</span> <span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">integration</span>
+
+<span class="c1"># ... your code ...</span>
+</code></pre></div>
 
 
 
