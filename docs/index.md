@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Skip integration tests with pytest](python/misc/python-pytest-skip-integratoin-tests-command-line-option.md)
+  *on November 8<sup>th</sup>, 2022*
+
 * [Dynamic Method Binding in Python](python/misc/python-dyanmic-method-binding.md)
   *on October 21<sup>th</sup>, 2022*
 

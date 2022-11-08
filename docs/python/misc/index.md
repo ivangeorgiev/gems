@@ -1,6 +1,7 @@
 
 # Misc Python Topics
 
+* [Skip integration tests with pytest](python-pytest-skip-integratoin-tests-command-line-option.md)
 * [Dynamic Method Binding in Python](python-dyanmic-method-binding.md)
 * [Python Class Decorator Primer - Class Instance Registry](python-class-decorator-class-registry.md)
 
