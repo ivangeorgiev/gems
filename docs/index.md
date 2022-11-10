@@ -2,6 +2,9 @@
 
 ## Latest Publications
 
+* [Regular Expression (regex) to match UUID string](misc/regex-match-uuid-string.md)
+  *on November 10<sup>th</sup>, 2022*
+
 * [Skip integration tests with pytest](python/misc/python-pytest-skip-integratoin-tests-command-line-option.md)
   *on November 8<sup>th</sup>, 2022*
 
