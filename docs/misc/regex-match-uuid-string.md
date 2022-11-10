@@ -28,5 +28,5 @@ ad40e41e4f3c42e4aa015751b9404907
 
 See also:
 
-* https://ihateregex.io/expr/uuid/
-* https://regex101.com/
+* [https://ihateregex.io/expr/uuid/](https://ihateregex.io/expr/uuid/)
+* [https://regex101.com/](https://regex101.com/)
