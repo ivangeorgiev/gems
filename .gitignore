@@ -1,3 +1,8 @@
+# draw.io
+*.png.bkp
+*.drawio.bkp
+*.dtmp
+
 .venv*
 .dev*
 .build
