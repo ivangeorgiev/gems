@@ -35,7 +35,7 @@ $Env:DATABRICKS_TOKEN = 'dapi123456789050abcdefghijklmno'
 To test our Databricks installation let's run a command to retrieve a list of clusters:
 
 ```powershell
-datbricks clusters list
+databricks clusters list
 ```
 
 Produces output like the following:
@@ -47,7 +47,7 @@ Produces output like the following:
 To get more detailed list in JSON format, add the `--output JSON` option:
 
 ```bash
-datbricks clusters list --output JSON
+databricks clusters list --output JSON
 ```
 
 Produces output like the following:
