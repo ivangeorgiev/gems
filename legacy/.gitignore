@@ -6,7 +6,7 @@
 .venv*
 .dev*
 .build
-site
+site/
 
 build
 dist
