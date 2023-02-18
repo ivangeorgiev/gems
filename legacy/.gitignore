@@ -1,0 +1,14 @@
+# draw.io
+*.png.bkp
+*.drawio.bkp
+*.dtmp
+
+.venv*
+.dev*
+.build
+site
+
+build
+dist
+*.egg-info
+__pycache__
