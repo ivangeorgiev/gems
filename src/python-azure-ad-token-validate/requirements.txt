@@ -1,3 +1,0 @@
-pyjwt
-cryptography
-pytest
