@@ -1,3 +1,3 @@
-Hello Python Katas
+Hello Django
 ========================
 

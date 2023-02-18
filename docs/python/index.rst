@@ -7,5 +7,7 @@ Python
    :glob:
 
    django/index.rst
+   sphinx/index.rst
    katas/index.rst
+
 

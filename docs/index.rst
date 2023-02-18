@@ -14,7 +14,6 @@ Welcome to Python Cookbook's documentation!
    git/index.rst
    python/index.rst
    coding/*
-   documentation/*
    regex-regular-expressions
    testing_index.rst
    recipes/recipe-index

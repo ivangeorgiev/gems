@@ -1,6 +1,6 @@
-==========================
-Documentation with Sphinx
-==========================
+===============================
+Basic Documentation with Sphinx
+===============================
 
 Start a Sphinx project
 =======================
