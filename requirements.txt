@@ -2,3 +2,4 @@ sphinx>=6
 sphinx-rtd-theme
 sphinx-book-theme
 sphinx-documatt-theme
+recommonmark

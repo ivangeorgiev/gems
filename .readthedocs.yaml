@@ -8,3 +8,6 @@ build:
 python:
   install:
     - requirements: requirements.txt
+
+sphinx:
+  builder: html
