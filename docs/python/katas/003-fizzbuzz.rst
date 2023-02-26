@@ -9,6 +9,7 @@ if the number is multiple of three and five, the number otherwise.
 .. collapse:: Tests
 
    .. code-block:: python
+      :linenos:
 
       import pytest
       from fizbuzz import fizbuzz3 as fizbuzz
