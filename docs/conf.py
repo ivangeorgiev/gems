@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Python Cookbook'
-copyright = '2021, Ivan Georgiev'
+copyright = '2021-2023, Ivan Georgiev'
 author = 'Ivan Georgiev'
 
 
@@ -28,7 +28,8 @@ author = 'Ivan Georgiev'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'recommonmark'
+    'recommonmark',
+    'sphinx_toolbox.collapse',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -47,7 +48,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
-html_theme = 'sphinx_book_theme'
+# html_theme = 'sphinx_book_theme'
 # html_theme = "sphinx_documatt_theme"
 
 RTD_NEW_THEME = True
