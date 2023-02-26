@@ -35,6 +35,7 @@ if the number is multiple of three and five, the number otherwise.
 .. collapse:: Solution 1
 
    .. code-block:: python
+      :linenos:
 
       def fizbuzz1(n):
          if n % 3 == 0 and n % 5 == 0:
@@ -48,6 +49,7 @@ if the number is multiple of three and five, the number otherwise.
 .. collapse:: Solution 2
 
    .. code-block:: python
+      :linenos:
 
       def fizbuzz2(n):
          divisors = ( (15, "FizzBuzz"), (3, "Fizz"), (5, "Buzz") )
@@ -59,6 +61,7 @@ if the number is multiple of three and five, the number otherwise.
 .. collapse:: Solution 3
 
    .. code-block:: python
+      :linenos:
 
       from functools import reduce
 
@@ -76,6 +79,7 @@ if the number is multiple of three and five, the number otherwise.
 .. collapse:: Solution 4
 
    .. code-block:: python
+      :linenos:
 
       def fizbuzz4(n):
          divisors = ( (3, "Fizz"), (5, "Buzz") )
