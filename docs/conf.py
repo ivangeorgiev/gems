@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Python Cookbook'
+project = 'Coding Gems Collection'
 copyright = '2021-2023, Ivan Georgiev'
 author = 'Ivan Georgiev'
 
@@ -30,6 +30,8 @@ author = 'Ivan Georgiev'
 extensions = [
     'recommonmark',
     'sphinx_toolbox.collapse',
+    "sphinxcontrib.jquery",
+    # 'sphinxawesome_theme',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -48,14 +50,15 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
-# html_theme = 'sphinx_book_theme'
+# html_theme = 'sphinxawesome_theme'
+html_theme = 'sphinx_book_theme'
 # html_theme = "sphinx_documatt_theme"
 
 RTD_NEW_THEME = True
 
-# html_theme_options = {
+html_theme_options = {
 #     'display_version': False,
-# }
+}
 
 html_show_sphinx = False
 
