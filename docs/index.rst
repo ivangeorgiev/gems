@@ -13,6 +13,7 @@ Welcome to Python Cookbook's documentation!
    azure/index.rst
    git/index.rst
    python/index.rst
+   powershell/index.rst
    coding/*
    regex-regular-expressions
    testing_index.rst
