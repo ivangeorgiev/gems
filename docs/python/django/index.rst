@@ -7,5 +7,6 @@ Django
    :glob:
 
    rest-framework/index.rst
+   manage/index.rst
    *
 
