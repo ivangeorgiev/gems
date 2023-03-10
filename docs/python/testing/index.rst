@@ -1,7 +1,6 @@
-Katas
-=====
+Testing
+========
 
-Python kata.
 
 .. toctree::
    :maxdepth: 1

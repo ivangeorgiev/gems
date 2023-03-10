@@ -9,5 +9,5 @@ Python
    django/index.rst
    sphinx/index.rst
    katas/index.rst
-
+   testing/index.rst
 
