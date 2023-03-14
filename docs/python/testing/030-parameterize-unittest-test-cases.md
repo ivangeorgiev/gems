@@ -254,3 +254,11 @@ As you could see, the `@parameterized_class` decorator creates a new test class 
 The `parameterized` package provides handy tools to avoid duplications in python's tests and make our tests much more expressive. Pytest already provides tools for test parameterization, but `unittest` is missing them.
 
 To get more of the `parameterized` package, it is recommended that you look at the [documentation](https://github.com/wolever/parameterized). For example, it is possible to pass values to keyword arguments, using `param`, use custom function for naming tests, etc.
+
+
+# Appendix: The complete example
+
+Here is the complete example as [GitHub gist](https://gist.github.com/ivangeorgiev/faec6ef49e23a7abe7d7b55eefedffae):
+
+<script src="https://gist.github.com/ivangeorgiev/faec6ef49e23a7abe7d7b55eefedffae.js"\>
+</script\>
