@@ -45,12 +45,12 @@ I am not going in details how to solution works. Our goal is to verify it works 
 
 We could define following tests to verify that our solution works correctly:
 
-| #| name | input | expected result |
-|--|------|-------|-----------------|
+| test # | name | input | expected result |
+|:-:|------|-------|-----------------|
 | 1|empty array| `[]`| `(None, None)` |
 | 2|array with one element | `[10]` | `(None, None)` |
 | 3|already sorted array | `[1, 2, 3, 4, 5]` | `(None, None)`|
-| 4|reverse sorted array | `[5, 4, 3, 2, 1]` | `(0, 4)`
+| 4|reverse sorted array | `[5, 4, 3, 2, 1]` | `(0, 4)`|
 | 5|array with same element | `[7, 7, 7, 7, 7, 7]` | `(None, None)` |
 | 6|array with two elements in the middle out of order | `[1, 2, 4, 3, 5]` | `(2, 3)` |
 | 7|array with elements out of order at the beginning | `[2, 1, 3, 4, 5]` | `(0, 1)` |
