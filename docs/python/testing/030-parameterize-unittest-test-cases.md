@@ -256,7 +256,7 @@ The `parameterized` package provides handy tools to avoid duplications in python
 To get more of the `parameterized` package, it is recommended that you look at the [documentation](https://github.com/wolever/parameterized). For example, it is possible to pass values to keyword arguments, using `param`, use custom function for naming tests, etc.
 
 
-# Appendix: The complete example
+## Appendix: The complete example
 
 Here is the complete example as [GitHub gist](https://gist.github.com/ivangeorgiev/faec6ef49e23a7abe7d7b55eefedffae):
 
