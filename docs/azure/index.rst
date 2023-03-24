@@ -1,4 +1,4 @@
-Azure Gems
+Azure
 =================
 
 
@@ -6,6 +6,7 @@ Azure Gems
    :maxdepth: 1
    :glob:
 
+   sql-database/index.rst
    infra/index.rst
 
 References
