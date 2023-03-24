@@ -2,5 +2,6 @@ sphinx>=6
 sphinx-rtd-theme
 sphinx-book-theme
 sphinx-documatt-theme
+sphinx-markdown-tables
 sphinx-toolbox
 recommonmark
