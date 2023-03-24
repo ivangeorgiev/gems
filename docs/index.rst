@@ -15,11 +15,11 @@ Welcome to Codding Gems Collection!
    python/index.rst
    bash/index.rst
    powershell/index.rst
+   productivity/index.rst
    coding/*
    regex-regular-expressions
    testing_index.rst
    recipes/recipe-index
-   productivity/productivity-index
 
 .. Indices and tables
 .. ==================
