@@ -29,7 +29,7 @@ Discussion
 ----------
 
 To see how the solution works, we will use the Postman's echo API `http://postman-echo.com/post <http://postman-echo.com/post>`_.
-Here is what the results of the run look on my laptop.
+Here is what the results of the run look like on my laptop.
 
 
 .. image:: postman-loop-run-results.png
