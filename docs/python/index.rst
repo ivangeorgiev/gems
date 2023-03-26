@@ -10,4 +10,5 @@ Python
    sphinx/index.rst
    katas/index.rst
    testing/index.rst
+   productivity/index.rst
 
