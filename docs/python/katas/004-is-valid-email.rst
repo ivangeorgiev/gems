@@ -1,7 +1,7 @@
 Is Valid Email Kata
 =====================
 
-Write a Python function that returns `True` or `False` to indicate whether the passed value 
+Write a Python function that returns `True` or `False` to indicate whether the passed value
 is a valid email address or not.
 
 
@@ -41,53 +41,15 @@ is a valid email address or not.
 .. collapse:: Solution 1
 
    .. code-block:: python
+      :caption: validator.py
       :linenos:
 
-      def fizbuzz1(n):
-         if n % 3 == 0 and n % 5 == 0:
-            return "FizzBuzz"
-         if n % 3 == 0:
-            return "Fizz"
-         if n % 5 == 0:
-            return "Buzz"
-         return str(n)
+      import re
 
-.. collapse:: Solution 2
+      def is_email(value):
+         pattern = r'^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$'
 
-   .. code-block:: python
-      :linenos:
+         regex = re.compile(pattern)
+         match = regex.search(value)
 
-      def fizbuzz2(n):
-         divisors = ( (15, "FizzBuzz"), (3, "Fizz"), (5, "Buzz") )
-         for divisor, result in divisors:
-            if n % divisor == 0:
-                  return result
-         return str(n)
-
-.. collapse:: Solution 3
-
-   .. code-block:: python
-      :linenos:
-
-      from functools import reduce
-
-      def fizbuzz3(n):
-         divisors = ( (3, "Fizz"), (5, "Buzz") )
-         result = ""
-         for divisor, word in divisors:
-            if n % divisor == 0:
-                  result = result + word
-         if result == "":
-            result = str(n)
-         return result
-
-
-.. collapse:: Solution 4
-
-   .. code-block:: python
-      :linenos:
-
-      def fizbuzz4(n):
-         divisors = ( (3, "Fizz"), (5, "Buzz") )
-         result = "".join(word for divisor, word in divisors if n % divisor == 0)
-         return result or str(n)
+         return bool(match)
