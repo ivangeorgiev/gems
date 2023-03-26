@@ -276,3 +276,9 @@ VSCode extension to interact with the Mock Server.
 
 The changes you make are not persisted. When Mock Server is restarted (e.g. `db.json` is updated)
 all the changes you have made will be lost.
+
+
+Meta
+------
+
+- Created on: 2023-03-26
