@@ -39,4 +39,5 @@ Visual Studio Code (VSCode) Extensions for Python Developers
 - vscode-faker
   Generate fake data for name, address, lorem ipsum, commerce and much more
 - `Mock Server <https://marketplace.visualstudio.com/items?itemName=Thinker.mock-server>`_
+- `File Watcher <https://marketplace.visualstudio.com/items?itemName=appulate.filewatcher>`_
 

@@ -8,5 +8,13 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.nosetestsEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "filewatcher.commands": [
+      {
+        "match": "docs[/\\\\].*\\.(rst|md)$",
+        "isAsync": false,
+        "cmd": "${workspaceRoot}\\.venv\\Scripts\\activate.bat & cd ${workspaceRoot}\\docs & make html",
+        "event": "onFileChange"
+      }
+    ]
 }
