@@ -5,3 +5,4 @@ sphinx-documatt-theme
 sphinx-markdown-tables
 sphinx-toolbox
 recommonmark
+watchdog
