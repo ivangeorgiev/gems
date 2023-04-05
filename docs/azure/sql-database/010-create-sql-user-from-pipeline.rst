@@ -118,7 +118,7 @@ Define a Role for an Existing SQL User
 ----------------------------------------
 
 Following SQL script could be used to define a role for an existing SQL user. You might notice that I
-have decided not to use pre-defined SQL roles, but use customized set of definitions.
+have decided not to use the `fixed SQL database roles <https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles?view=sql-server-ver16#fixed-database-roles>`_, but use customized set of definitions.
 
 .. code-block:: sql
    :caption: /db-scripts/Add-SqlDatabaseUserRole.sql
