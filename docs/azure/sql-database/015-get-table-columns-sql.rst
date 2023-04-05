@@ -26,3 +26,8 @@ table name and column id.
    order by schema_name,
       table_name,
       column_id;
+
+Meta
+-----
+
+- Created on: 2023-04-05
