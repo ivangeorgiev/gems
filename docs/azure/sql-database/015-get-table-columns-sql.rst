@@ -6,6 +6,7 @@ where the table name starts with `MYAPP_`. Results are sorted by
 table name and column id.
 
 .. code-block:: sql
+   :caption: list-table-columns.sql
 
    select schema_name(tab.schema_id) as schema_name,
       tab.name as table_name,
