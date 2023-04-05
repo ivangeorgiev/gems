@@ -1,7 +1,7 @@
-Get a List of Tables in a Schema from SQL Server
-==================================================
+Get a List of Table Columns in a Schema from SQL Server
+========================================================
 
-Following SQL query gets a list all table fields in the `dbo` schema
+Following SQL query gets a list all table fields/columns in the `dbo` schema
 where the table name starts with `MYAPP_`. Results are sorted by
 table name and column id.
 
@@ -25,4 +25,3 @@ table name and column id.
    order by schema_name,
       table_name,
       column_id;
-
