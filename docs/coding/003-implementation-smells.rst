@@ -223,3 +223,4 @@ See also
 ----------
 
 - https://tusharma.in/smells/index.html
+- `Software Unit Test Smells <https://testsmells.org/>`_
