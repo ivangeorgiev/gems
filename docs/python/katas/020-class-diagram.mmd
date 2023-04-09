@@ -1,0 +1,26 @@
+classDiagram
+
+IDataStore <|.. FileStore
+IDataStore <|.. HttpStore
+DataDisplay --> IDataStore
+
+class IDataStore {
+    <<interface>>
+    +read(fromPath)
+    +save(toPath)
+}
+
+class FileStore {
+    +read(fromPath)
+    +save(toPath)
+}
+
+class HttpStore {
+    +read(fromPath)
+    +save(toPath)
+}
+
+class DataDisplay {
+    IDataStore DataStore
+}
+

@@ -4,5 +4,6 @@ sphinx-book-theme
 sphinx-documatt-theme
 sphinx-markdown-tables
 sphinx-toolbox
+sphinxcontrib-mermaid
 recommonmark
 watchdog

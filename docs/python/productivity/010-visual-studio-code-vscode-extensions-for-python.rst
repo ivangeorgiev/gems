@@ -48,4 +48,5 @@ Drawing and Diagramming
 - Draw.io Integration
 - Markdown Preview Mermaid Support
 - Mermaid Editor
+- Mermaid Markdown Syntax Highlighting
 
