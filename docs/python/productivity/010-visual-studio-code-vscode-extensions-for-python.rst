@@ -42,3 +42,10 @@ Visual Studio Code (VSCode) Extensions for Python Developers
 - `Mock Server <https://marketplace.visualstudio.com/items?itemName=Thinker.mock-server>`_
 - `File Watcher <https://marketplace.visualstudio.com/items?itemName=appulate.filewatcher>`_
 
+Drawing and Diagramming
+------------------------
+
+- Draw.io Integration
+- Markdown Preview Mermaid Support
+- Mermaid Editor
+
