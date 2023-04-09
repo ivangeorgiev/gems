@@ -16,7 +16,7 @@ Welcome to Codding Gems Collection!
    bash/index.rst
    powershell/index.rst
    productivity/index.rst
-   coding/*
+   coding/index.rst
    regex-regular-expressions
    testing_index.rst
    recipes/recipe-index

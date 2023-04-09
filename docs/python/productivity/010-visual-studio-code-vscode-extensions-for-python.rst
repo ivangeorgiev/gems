@@ -21,6 +21,7 @@ Visual Studio Code (VSCode) Extensions for Python Developers
   - Test Explorer Live Share
   - Test Explorer Status Bar
 - REST Client
+- Thunder Client - Postman-like REST client for VSCode
 - vscode-icons
 - Zip Tools
 - SQLite Viewer
