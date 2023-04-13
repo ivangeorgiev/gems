@@ -45,6 +45,7 @@ Knowing too much
 ~~~~~~~~~~~~~~~~~~
 
 Initializer receives a set of arguments which characterize customer.
+This introduces strong coupling between customer details and order.
 What if we need to add another customer attribute?
 
 This would break all client code.
