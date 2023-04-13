@@ -8,4 +8,4 @@ Python kata.
    :glob:
 
    *
-
+   code-smell/index.rst
