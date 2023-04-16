@@ -4,11 +4,45 @@ On Unit Test Naming
 Unit Test Name Pattern
 ------------------------
 
+Focus on behavior, not implementation.
+
+Compare:
+
+- test_userrepository_get_should_return_user_for_existing_user
+- test_should_get_existing_user
+
+Python
+~~~~~~~
+
 .. code-block:: python
 
    class TestMyClass:
       def test_should_dosomething(self):
          pass
+
+**Example:**
+
+.. code-block:: python
+
+   class TestUserRepository:
+
+      def test_should_get_existing_user_from_the_repository(self):
+         # Given dummy user exists in user repository
+         #       AND user repository instance
+         # When getting user the repository by id
+         # Then the returned user should match the dummy user
+
+      def test_should_fail_to_get_non_existent_user(self):
+         pass
+
+      def test_should_put_user_to_the_repository(self):
+         pass
+
+      def test_should_fail_to_put_user_with_duplicate_id(self):
+         pass
+
+Here is a bit more elaborate implementation of Unit Test with some Django ORM.
+Note that that code is not complete.
 
 .. code-block:: python
 
