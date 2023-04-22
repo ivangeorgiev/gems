@@ -8,5 +8,6 @@ Django
 
    rest-framework/index.rst
    manage/index.rst
+   testing/index.rst
    *
 
