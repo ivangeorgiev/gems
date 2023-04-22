@@ -1,5 +1,8 @@
-Get a List of Foreign Key Constraints in SQL Server
-========================================================
+Get a List of Foreign Key Constraints for a Table in SQL Server
+================================================================
+
+Following SQL Server statement will return a list of `ALTER TABLE` statements which
+drop all foreign key constraints for a table.
 
 .. code-block:: sql
 
