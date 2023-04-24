@@ -4,7 +4,7 @@ Revert All Migrations for Django App
 Doing it the normal way
 -----------------------------
 
-If all migrations are consistent, you could Django's migrate command:
+If all migrations are consistent, you could use Django's migrate command passing `zero` as final migration:
 
 .. code-block:: bash
 
