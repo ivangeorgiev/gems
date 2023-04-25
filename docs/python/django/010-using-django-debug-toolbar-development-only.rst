@@ -28,6 +28,7 @@ from `requirements.txt`:
 
    -r ./requirements.txt
    django-debug-toolbar
+   django-extensions
    pytest
    pytest-django
 
@@ -56,6 +57,11 @@ Create `settings_dev.py` in your Django project directory:
    globals().setdefault('DEBUG', False)
 
    if DEBUG:
+      INSTALLED_APPS += [
+         'django_extensions',
+         'debug_toolbar',
+      ]
+
       MIDDLEWARE += [
          'debug_toolbar.middleware.DebugToolbarMiddleware',
       ]
