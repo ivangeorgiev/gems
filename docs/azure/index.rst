@@ -8,6 +8,7 @@ Azure
 
    sql-database/index.rst
    infra/index.rst
+   snippets/index.rst
 
 References
 ------------
