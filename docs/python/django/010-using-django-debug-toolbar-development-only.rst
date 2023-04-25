@@ -12,8 +12,10 @@ The technique described is not limited only to Django Debug Toolbar. It could be
 isolate dependencies and tools which are required only during development.
 
 .. note::
-   Django Debug Toolbar is enabled and shown only if `DEBUG=True` and Django server is
-   started with development-only settings module.
+   Django Debug Toolbar is enabled and shown only if Django server is started:
+
+   - in debug mode (`DEBUG=True`)
+   - with development-only settings module, e.g. `DJANGO_SETTINGS_MODULE=mdapi.settings_dev`
 
 Step 1. Create requirements-dev.txt file
 ------------------------------------------
