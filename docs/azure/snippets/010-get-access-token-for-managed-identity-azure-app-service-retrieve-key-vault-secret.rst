@@ -28,7 +28,7 @@ Here is sample code in Python which acquires access token and uses it to get sec
    token = token_response.json()["access_token"]
    token
 
-   secret_params= {"api-version': '2016-10-01'}
+   secret_params= {"api-version': '7.4'}
    secret_response = requests.get(
       f"https://{key_vault_name}.vault.azure.net:443/secrets/{secret_name}/",
       params=secret_params,
@@ -40,6 +40,15 @@ Here is sample code in Python which acquires access token and uses it to get sec
 
 The same code to get access token for Managed Identity from App Service as `GitHub gist <https://gist.github.com/ivangeorgiev/7d536fafc7dca0c5bf45b35d20039fa0>`__:
 
+The Key Vault `api-varsion` query parameter shown in documentation is `7.4`, but I found that `2016-10-01` also works.
+
 .. raw:: html
 
    <script src="https://gist.github.com/ivangeorgiev/7d536fafc7dca0c5bf45b35d20039fa0.js?file=get_access_token.py"></script>
+
+
+See Also
+-------------
+
+- `Get Secret<https://learn.microsoft.com/en-us/rest/api/keyvault/secrets/get-secret/get-secret?tabs=HTTP>`__ Key Vault documentation
+- `Connect to Azure services in app code <https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=portal%2Cpowershell>`__
