@@ -1,7 +1,7 @@
 Movielens with Django Rest Framework Kata
 ==========================================================
 
-The goal of this kata is to create a browasble API, using MovieLens database.
+The goal of this kata is to create a browasble API as an interface to the MovieLens database.
 
 Download the *small* MovieLens database from https://grouplens.org/datasets/movielens/latest/ and examine the content of the files. We are interested in
 `movies.csv` and `links.csv` files.
