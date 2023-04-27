@@ -13,3 +13,4 @@ Sample Projects
 
 - https://github.com/ivangeorgiev/drf-snippets
 - https://github.com/ivangeorgiev/drf-master-detail
+- https://github.com/ivangeorgiev/movielens-drf
