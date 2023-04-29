@@ -1,5 +1,5 @@
-Assertion Helper Functions
-============================
+Pytest Assertion Helper Functions
+==================================
 
 Here is a assertion helper function example. The `__tracebackhide__ = True` line
 instructs pytest to not include traceback for the assertion helper function.
@@ -123,4 +123,4 @@ by url.
 
 The complete project is available as `repl <https://replit.com/@ivangeorgiev7/DjangoPytest>`__.
 
-The code of the test is also available as `Github gist <https://gist.github.com/ivangeorgiev/592aa63d177f6ede0c3bb7f6e115ca68>`.
+The code of the test is also available as `Github gist <https://gist.github.com/ivangeorgiev/592aa63d177f6ede0c3bb7f6e115ca68>`__.
