@@ -7,3 +7,10 @@ Azure SQL Database
    :glob:
 
    *
+
+Links
+------------
+
+- `SQL Fiddle <http://sqlfiddle.com/>`__
+
+
