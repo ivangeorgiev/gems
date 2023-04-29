@@ -45,7 +45,7 @@ More Complex Example
 -------------------------
 
 Here is a more complex example of testing the `urls/` endpoing from the Django Rest Framework
-installation example.
+`installation example <https://www.django-rest-framework.org/#example>`__.
 
 The `assert_response_userlist_equals()` assertion helper performs more complex assert. It
 checks that the response jsoin is a list, than it checks that the list of users from the
