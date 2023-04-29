@@ -23,5 +23,6 @@ Online Fiddle
 - `Online Python <https://www.online-python.com/>`__
 - `Online GDB for Python <https://www.onlinegdb.com/>`__
 - `W3schools Python Compiler (Editor) <https://www.w3schools.com/python/python_compiler.asp>`__
-- `Replit <https://replit.com/new/python3>`__
-
+- `Replit <https://replit.com/new/python3>`__ - has template for Django
+- `Collaboratory <https://colab.research.google.com/>`__ - Online Jupyter notebooks
+- `Trinket.io Python <https://trinket.io/python>`__
