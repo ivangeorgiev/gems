@@ -50,5 +50,5 @@ The Key Vault `api-varsion` query parameter shown in documentation is `7.4`, but
 See Also
 -------------
 
-- `Get Secret<https://learn.microsoft.com/en-us/rest/api/keyvault/secrets/get-secret/get-secret?tabs=HTTP>`__ Key Vault documentation
+- `Get Secret <https://learn.microsoft.com/en-us/rest/api/keyvault/secrets/get-secret/get-secret?tabs=HTTP>`__ Key Vault documentation
 - `Connect to Azure services in app code <https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=portal%2Cpowershell>`__

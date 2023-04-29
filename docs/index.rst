@@ -13,6 +13,7 @@ Welcome to Codding Gems Collection!
    azure/index.rst
    git/index.rst
    python/index.rst
+   data/index.rst
    bash/index.rst
    powershell/index.rst
    productivity/index.rst
