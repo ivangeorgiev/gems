@@ -38,7 +38,7 @@ I use following SQL to generate DDL statements to drop all tables for an applica
    from sys.tables as tab
    where
       schema_name(tab.schema_id) = 'dbo'
-      AND tab.name Like 'TM_%'
+      AND tab.name Like 'myapp\_%' ESCAPE '\'
    )
 
    UNION ALL
@@ -47,7 +47,7 @@ I use following SQL to generate DDL statements to drop all tables for an applica
    from sys.tables as tab
    where
       schema_name(tab.schema_id) = 'dbo'
-      AND tab.name Like 'myapp_%'
+      AND tab.name Like 'myapp\_%' ESCAPE '\'
    ;
 
 
