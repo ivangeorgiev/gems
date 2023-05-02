@@ -67,6 +67,9 @@ Following Azure Pipelines yaml template uses Azure PowerShell task to call Graph
 
             $result = Invoke-RestMethod -Uri $uri -Method "Patch" -Headers $restHeaders -Body $body -UseBasicParsing
 
+Note that `id` attribute of the role is required.
+If PATCH request doesn't provide an `id` attribute for the role,
+Graph returns *400 Bad Request*.
 
 See Also
 ----------------
