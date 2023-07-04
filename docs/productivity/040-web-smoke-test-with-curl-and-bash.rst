@@ -1,6 +1,19 @@
 Web Smoke Test with Curl and Bash
 ========================================
 
+Problem
+---------
+
+You are creating a CICD pipeline which deploys your web application. After it is deployed you want to be able
+to confirm that the application works fine. This verification is sometimes referred as smoke test.
+
+Solution
+-------------
+
+You create a bash script which fetches the application status page. To avoid false alarm, you allow the
+script to retry multiple times with some delay between the attempts.
+
+
 .. code-block:: bash
 
    #! /bin/bash
@@ -23,3 +36,4 @@ Web Smoke Test with Curl and Bash
    exit 1
 
 
+2023-07-04
