@@ -11,6 +11,7 @@ Python
    katas/index.rst
    testing/index.rst
    productivity/index.rst
+   snippets/index.rst
 
 Links
 -----------
