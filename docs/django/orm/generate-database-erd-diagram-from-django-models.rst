@@ -1,4 +1,4 @@
-Generate Database Entity Relationships Diagram (ERD) from Django Models
+Generate Database Diagram from Django Models
 ########################################################################
 
 Install `django-extensions`
@@ -195,7 +195,6 @@ Same result could be achieved specifying models for all the applications:
    $ python elearn/manage.py graph_models --pygraphviz -o elearn_course_models_erd.png -a -I Course,Module,Subject,Content
 
 .. image:: elearn_course_models_erd.png
-  :width: 1024
   :alt: Database diagram including only some models
 
 Install PyGraphViz on Windows
