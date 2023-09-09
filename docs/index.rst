@@ -21,6 +21,7 @@ Welcome to Codding Gems Collection!
    regex-regular-expressions
    testing_index.rst
    recipes/recipe-index
+   django/index
 
 .. Indices and tables
 .. ==================
