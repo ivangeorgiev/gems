@@ -110,3 +110,20 @@ to visually organize registered applications in three categories:
 - 3rd party applications, e.g. Swagger API interface generator
 - Local applications which are part of our local Django project
 
+Modify `.gitignore` File
+*****************************
+
+Most likely you are using git as version control system. I recommend adding following lines to your `.gitignore` file:
+
+.. code-block:: none
+   :caption: .gitignore
+   :linenos:
+
+   .vscode
+   .dev
+   .venv*
+   # ...
+
+- Line #1 instructs git to ignore the Visual Studio Code metadata
+- Line #2 is something I like to use. I put random ad-hoc staff in a directory `.dev` which is not under version control
+- Line #3 instructs git to ignore our virtual environments
