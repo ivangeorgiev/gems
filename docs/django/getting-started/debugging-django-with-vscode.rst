@@ -47,4 +47,27 @@ Running Django Development Server in Debug Mode
 
 Open the `Run and Debug` sidebar (:kbd:`Ctrl-Shift-d`). Press the green arrow button to start debugging (or press :kbd:`F5`).
 
-Now you have powerful debugging tool at your fingertips.
+Happy debugging!
+
+
+.. list-table:: Debug Shortcuts
+   :header-rows: 1
+
+   * - Shortcut
+     - Action
+   * - :kbd:`F6`
+     - Pause
+   * - :kbd:`F5`
+     - Start/Continue
+   * - :kbd:`F9`
+     - Toggle Breakpoint
+   * - :kbd:`F10`
+     - Step Over
+   * - :kbd:`F11`
+     - Step Into
+   * - :kbd:`Shift-F11`
+     - Step Out
+   * - :kbd:`Ctrl-Shift-F5`
+     - Restart
+   * - :kbd:`Shift-F5`
+     - Stop
