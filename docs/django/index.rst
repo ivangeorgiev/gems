@@ -7,13 +7,11 @@ The intention is to put some more advanced techniques, but to get to advanced di
 The companion Django project used can be found in GitHub: https://github.com/ivangeorgiev/django-elearn.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    getting-started/index
    orm/index
    rest_framework/index
-
-
 
 
 

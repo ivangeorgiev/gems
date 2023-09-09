@@ -7,7 +7,7 @@ Welcome to Codding Gems Collection!
 ===========================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :glob:
 
    azure/index.rst
