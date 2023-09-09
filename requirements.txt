@@ -1,3 +1,4 @@
+insipid-sphinx-theme
 sphinx>=6
 sphinx-rtd-theme
 sphinx-book-theme
