@@ -6,4 +6,5 @@ Django ORM Cookbook
    :maxdepth: 1
 
    relations
+   generate-database-erd-diagram-from-django-models
 

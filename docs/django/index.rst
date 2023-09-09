@@ -4,6 +4,7 @@ Django Cookbook
 .. toctree::
    :maxdepth: 2
 
+   getting-started/index
    orm/index
    rest_framework/index
 
