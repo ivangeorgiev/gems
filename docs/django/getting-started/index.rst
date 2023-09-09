@@ -1,9 +1,9 @@
 ####################################
-Getting Started with Django Project
+Django Project Cookbook
 ####################################
+
 
 .. toctree::
    :maxdepth: 1
 
    setup-django-project
-

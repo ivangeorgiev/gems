@@ -7,11 +7,12 @@ Welcome to Codding Gems Collection!
 ===========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :glob:
 
    azure/index.rst
    git/index.rst
+   django/index
    python/index.rst
    data/index.rst
    bash/index.rst
@@ -21,7 +22,6 @@ Welcome to Codding Gems Collection!
    regex-regular-expressions
    testing_index.rst
    recipes/recipe-index
-   django/index
 
 .. Indices and tables
 .. ==================

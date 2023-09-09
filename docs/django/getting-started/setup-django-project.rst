@@ -1,6 +1,9 @@
 Setup a New Django Project
 ###########################
 
+.. contents:: Table of Contents
+    :depth: 3
+
 
 Create and Activate Virtual Environment
 *****************************************
