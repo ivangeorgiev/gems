@@ -1,4 +1,4 @@
-Setup Django Testing with `pytest`
+Setup Django for Testing with `pytest`
 ##################################################
 
 .. contents:: Table of Contents
