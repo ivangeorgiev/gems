@@ -33,6 +33,8 @@ extensions = [
     "sphinxcontrib.jquery",
     'sphinx_markdown_tables',
     'sphinxcontrib.mermaid',
+    'ablog',
+    'sphinx.ext.intersphinx',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

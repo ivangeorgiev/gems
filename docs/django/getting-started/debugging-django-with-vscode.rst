@@ -1,6 +1,16 @@
 Debug Django Project with Visual Studio Code (VSCode)
 ##############################################################
 
+.. post:: 2023-09-09 13:30:00
+   :tags: django,debugging,vscode
+   :category: django
+   :author: ivan
+   :language: en
+
+   In order to debug Django project, we need to first create a Visual Studio Code (VSCode) run
+   configuration.
+
+
 Method 1: Create Run Configuration
 ************************************
 

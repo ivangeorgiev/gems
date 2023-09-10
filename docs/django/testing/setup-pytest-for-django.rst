@@ -1,6 +1,20 @@
 Setup Django for Testing with `pytest`
 ##################################################
 
+.. post:: 2023-09-10 13:00:00
+   :tags: django,testing,django rest framework
+   :category: django
+   :author: ivan
+   :language: en
+
+   Test Driven Development is a popular software development practice which helps in creating
+   better software. The practice that I prefer is a little bit relaxed practice that I call
+   Test Assisted Development as sometimes tests are not written before the production code (but
+   let's leave this discussion for another place and time).
+   Django projects also need to be thoroughly tested. Let's configure our Django project for
+   testing with `pytest` before even creating
+   the first Django application.
+
 .. contents:: Table of Contents
    :local:
    :depth: 3
@@ -132,3 +146,4 @@ Run all the tests:
 The test case uses a Django test client, provided as `pytest` fixture by the `pytest-djang`
 extension. The test case makes a `GET` request to the Swagger documentation page (`/docs/`)
 and asserts that the response was a success response.
+

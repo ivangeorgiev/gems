@@ -1,6 +1,17 @@
 Generate Database Diagram from Django Models
 ########################################################################
 
+.. post:: 2023-09-09 14:30:00
+   :tags: django,orm,database diagram,erd,er diagram
+   :category: django
+   :author: ivan
+   :language: en
+
+   Database diagram are very useful project documentation. They might be useful for
+   understanding the project. With projects under development, documentation, diagrams are
+   not exception, easily gets out of sync with actual implementation. Generating documentation
+   from code helps to keep the documentation always up to date with the current code.
+
 Install `django-extensions`
 ******************************
 

@@ -1,6 +1,15 @@
 Setup a New Django Project
 ###########################
 
+.. post:: 2023-09-09 13:00:00
+   :tags: django
+   :category: django
+   :author: ivan
+   :language: en
+
+   Start a new Django project from scratch.
+
+
 .. contents:: Table of Contents
    :local:
    :depth: 3

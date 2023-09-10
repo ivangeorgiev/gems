@@ -23,6 +23,13 @@ Welcome to Codding Gems Collection!
    testing_index.rst
    recipes/recipe-index
 
+Latest Additions
+=====================
+
+.. postlist:: 30
+   :format: {title} by {author} on {date}
+   :excerpts:
+
 .. Indices and tables
 .. ==================
 
