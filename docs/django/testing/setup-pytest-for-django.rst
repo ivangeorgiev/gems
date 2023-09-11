@@ -75,10 +75,28 @@ the default project configuration. We will start adding settings while developin
 Configure `pytest`
 ******************************
 
-There are many ways to configure `pytest`. The most straightforward is using `pytest.ini <https://docs.pytest.org/en/stable/reference/customize.html#pytest-ini>`__.
-However we are going to use `pyproject.toml <https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml>`__.
+There are many ways to configure `pytest`. Here are just some of the options:
 
-Configuration settings are the same. The difference is where the configuration is stored.
+- Use `pytest.ini <https://docs.pytest.org/en/stable/reference/customize.html#pytest-ini>`__.
+- Use `pyproject.toml <https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml>`__.
+- Use `setup.cfg`
+
+All methods use the same configuration settings, just are different in where the configuration settings are
+stored and slightly different on the syntax.
+
+We are using `setup.cfg` to configure `pytest` as it is well supported by Visual Studio Code (VSCode):
+
+.. code-block:: ini
+   :caption: setup.cfg
+   :linenos:
+
+   [tool:pytest]
+   addopts = --rootdir elearn -s -vv --import-mode importlib
+   testpaths =
+      elearn/tests
+   DJANGO_SETTINGS_MODULE = elearn.settings_test
+
+Here is the same configuration, but using `pyproject.toml`:
 
 .. code-block:: ini
    :caption: pyproject.toml
