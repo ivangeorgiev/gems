@@ -16,7 +16,7 @@ The companion Django project used can be found in GitHub: https://github.com/iva
 .. toctree::
    :maxdepth: 1
 
-   getting-started/index
+   core/index
    orm/index
    rest_framework/index
    testing/index
