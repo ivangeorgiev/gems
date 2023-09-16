@@ -14,6 +14,7 @@ Django ORM Cookbook
 .. toctree::
    :maxdepth: 1
 
+   register-django-models-in-admin
    relations
    generate-database-erd-diagram-from-django-models
 
