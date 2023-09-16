@@ -140,3 +140,16 @@ Most likely you are using git as version control system. I recommend adding foll
 - Line #1 instructs git to ignore the Visual Studio Code metadata
 - Line #2 is something I like to use. I put random ad-hoc staff in a directory `.dev` which is not under version control
 - Line #3 instructs git to ignore our virtual environments
+
+
+Create Superuser
+************************
+
+.. code-block:: console
+
+   $ python elearn/manage.py createsuperuser
+   Username (leave blank to use 'ivang'): ivang
+   Email address: ivang@home.local
+   Password:
+   Password (again):
+
