@@ -1,5 +1,5 @@
 ####################################
-Django Project Cookbook
+Core Django Cookbook
 ####################################
 
 
@@ -16,3 +16,6 @@ Django Project Cookbook
 
    setup-django-project
    debugging-django-with-vscode
+   enable-db-lock-timeout
+   log-django-sql-queries-to-terminal
+
