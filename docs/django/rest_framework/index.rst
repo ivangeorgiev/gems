@@ -14,3 +14,4 @@ Django REST Framework Cookbook
    :maxdepth: 1
 
    setup-django-rest-framework
+   nested-drf-serialization

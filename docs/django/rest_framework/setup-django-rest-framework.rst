@@ -3,7 +3,7 @@ Setup the Project for Django REST Framework
 ###############################################
 
 .. post:: 2023-09-09 15:00:00
-   :tags: django,orm
+   :tags: django,django rest framework, drf
    :category: django
    :author: ivan
    :language: en
