@@ -14,3 +14,4 @@ Django Testing Cookbook
    :maxdepth: 1
 
    setup-pytest-for-django
+   fake-django-app-for-testing-with-pytest

@@ -17,4 +17,5 @@ Django ORM Cookbook
    register-django-models-in-admin
    relations
    generate-database-erd-diagram-from-django-models
+   custom_sequential_number_field
 
