@@ -15,3 +15,4 @@ Django Testing Cookbook
 
    setup-pytest-for-django
    fake-django-app-for-testing-with-pytest
+   testing-links
