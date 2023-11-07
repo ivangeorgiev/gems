@@ -64,3 +64,7 @@ Links
 - `Authentication for Azure Databricks automation <https://learn.microsoft.com/en-us/azure/databricks/dev-tools/auth>`__
 - `Get a Microsoft Entra ID access token with the Microsoft identity platform REST API <https://learn.microsoft.com/en-us/azure/databricks/dev-tools/service-prin-aad-token#--get-a-microsoft-entra-id-access-token-with-the-microsoft-identity-platform-rest-api>`__
 - App Service Managed Identity `REST endpoint reference <https://learn.microsoft.com/en-us/azure/app-service/overview-managed-identity?tabs=portal%2Chttp#rest-endpoint-reference>`__ from *How to use managed identities for App Service and Azure Functions*
+
+
+.. - `Trigger Databricks job via RestApi using oAuth(AAD) <https://anupamchand.medium.com/trigger-databricks-job-via-restapi-using-oauth-aad-671d8597b97d>`__
+.. - `Trigger a spark job on Databricks using Rest API <https://anupamchand.medium.com/trigger-a-spark-job-on-databricks-using-rest-api-940227616768>`__
