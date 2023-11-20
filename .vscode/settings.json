@@ -16,5 +16,6 @@
         "cmd": "${workspaceRoot}\\.venv\\Scripts\\activate.bat & cd ${workspaceRoot}\\docs & make html",
         "event": "onFileChange"
       }
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }
