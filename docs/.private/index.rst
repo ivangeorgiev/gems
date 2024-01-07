@@ -6,4 +6,5 @@ Data Engineering
    :glob:
 
    *
+   recipes/index.rst
 
